@@ -106,9 +106,28 @@ a {
 
 
 #room {
-    background: url(../img/BackDropSmall.png) center top no-repeat;
+    background: url(../img/BackDropSmall.png) 0 -100px no-repeat;
     width: 320px;
-    height: 400px;
+    height: 300px;
+}
+
+
+
+
+#patrons {
+    width: 320px;
+    height: 300px;
+    background: url(../img/PatronSmall.png) -320px bottom no-repeat;
+}
+#patrons.active {
+    background-position: 90px bottom;
+    -webkit-transition: all 2s ease-out;
+    transition: all 2s ease-in;
+}
+#patrons.done {
+    background-position: 500px bottom;
+    -webkit-transition: all 2s ease-in;
+    transition: all 2s ease-in;
 }
 
 

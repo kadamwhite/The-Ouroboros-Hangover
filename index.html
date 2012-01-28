@@ -31,6 +31,11 @@
         </div>
         <div id="debug">
             <h1 id="pouring"></h1>
+            <ul>
+                <li><a href="javascript:$('#patrons').addClass('active');">Get Patron</a></li>
+                <li><a href="javascript:$('#patrons').addClass('done');">Dismiss Patron</a></li>
+                <li><a href="javascript:$('#patrons').hide().removeClass('active').removeClass('done').show();">Reset Patron</a></li>
+            </ul>
             <p id="state"></p>
             <ul id="log"></ul>
         </div>
