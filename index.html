@@ -29,9 +29,11 @@
   <div id="game">
     <div id="room">
 		<div id="patrons"></div>
-		<div id="bartop"></div>
+		<div id="barTop"></div>
 	</div>
-	<div id="well"></div> <!-- the "well" is the rail behind the bar where the liquor is stored -->
+	<div id="well">
+        <ul id="ingredients"></ul>
+	</div>
   </div> <!--! end of #game -->
 
 
@@ -41,10 +43,11 @@
 
   <!-- We aren't minifying anything yet -->
   <script defer src="js/script.js"></script>
+  <script defer src="js/game.js"></script>
   <!-- end scripts-->
 
 
-  <script> // Change UA-XXXXX-X to be your site's ID
+  <script>
     window._gaq = [['_setAccount','UA-28701099-1'],['_trackPageview'],['_trackPageLoadTime']];
     Modernizr.load({
       load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
