@@ -91,19 +91,15 @@ if( window.DeviceMotionEvent ) {
     function deviceMotionHandler(event){
         var acceleration = event.accelerationIncludingGravity;
 
-        var x = Math.round(acceleration.x),
-            y = Math.round(acceleration.y),
-            yRotation = Math.round(((y + 9.81) / 9.81) * 90),
-            z = Math.round(acceleration.z),
-            facingUp = (z > 0) ? 1 : -1;
+        var rotation = Math.round(((acceleration.y + 9.81) / 9.81) * 90);
         /* Update values every 10th of a second */
-        //setInterval(function(){
-        $('#debug #state').html([
-            'x: ', x,
-            '<br />y: ', yRotation,
-            '<br />z: ', z
-        ].join(''));
-        //}, 100);
+        setInterval(function(){
+            $('#debug #state').html([
+                'rotation: ',
+                rotation,
+                '&deg;'
+            ].join(''));
+        }, 100);
 
         $('#ingredients a').on('click', function(e){
             e.preventDefault();
@@ -119,7 +115,7 @@ if( window.DeviceMotionEvent ) {
         });
 
 
-        if( (-130 >= yRotation || 130 <= yRotation)
+        if( ( -130 >= rotation || 130 <= rotation )
         //&& (-30 <= beta && beta <= 0)
         //&& (-70 <= gamma && gamma <= 70)
         ) {
