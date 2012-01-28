@@ -68,14 +68,23 @@ td { vertical-align: top; }
 
 body {
     width:320px;
-    background: #000000;
+    background: #666;
     color: #ffffff;
     padding: 0;
     margin: 0;
     font-size: 16px;
+    overflow: hidden;
 }
 a {
     color: #fff;
+}
+.warning {
+    display: none;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-family: serif;
+    text-shadow: 0 2px 0px #000;
 }
 
 
@@ -104,7 +113,14 @@ a {
 
 
 
-
+#bottle {
+    display: none;
+    position: fixed;
+    top: 0;
+    width: 320px;
+    height: 480px;
+    background: url(../img/bottle.jpg) center top no-repeat;
+}
 
 
 
@@ -133,7 +149,7 @@ a {
 }
 
 @media only screen and (min-width: 768px) {
-
+    .warning { display: block; } /* Show iPad warning */
 }
 
 
