@@ -4,8 +4,8 @@ hangover = {
 	isPouring:false,
 	currentIngredient:null,
 	pour : {
-		pourStart:0,
-		pourEnd:0
+		start:0,
+		end:0
 	},
 	drink : {
 		name: "foo",
@@ -16,28 +16,52 @@ hangover = {
 		var diff = pour.pourEnd - pour.PourStart;//in ms
 	}
 };
-
-
+/**
+ * Return the length of the pour event, in milliseconds
+ */
+hangover.pour.time = function(){
+    return this.end - this.start;
+}
 
 if (window.DeviceOrientationEvent && window.DeviceMotionEvent) {
   window.ondeviceorientation = function(event) {
     alpha = Math.round(event.alpha);
     beta = Math.round(event.beta);
     gamma = Math.round(event.gamma);
+      /* Update values every 10th of a second */
+    //setInterval(function(){
+        $('#debug #state').html([
+            'alpha: ',
+            alpha,
+            '<br />beta: ',
+            beta,
+            '<br />gamma: ',
+            gamma
+        ].join(''));
+    //}, 100);
 	
-	if((alpha <= 270 || alpha >= 100) 
-		&& (beta >= -30 || beta <= 0)
-		&& (gamma <= 70 || gamma >= -70) ) {
+	if(
+        (100 <= alpha && alpha <= 270)
+        //&& (-30 <= beta && beta <= 0)
+        //&& (-70 <= gamma && gamma <= 70)
+    ) {
 		//Start pouring
 		if(!hangover.isPouring) {
-			hangover.pour.pourStart = new Date();
+            hangover.isPouring = true;
+			hangover.pour.start = new Date();
+            $('#debug #pouring').html('POURING');
 		}
 	} else {
 		//Done pouring
 		if(hangover.isPouring) {
 			hangover.isPouring = false;
+<<<<<<< HEAD
 			hangover.pourEnd = new Date();
 			
+=======
+			hangover.pour.end = new Date();
+            $('#debug #pouring').html('');
+>>>>>>> b84da36a1cd8c23823066286a747785daca8c1c1
 		}
 	}
 	/*
