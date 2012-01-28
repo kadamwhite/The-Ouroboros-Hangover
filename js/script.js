@@ -1,13 +1,23 @@
 /* Author: K.Adam White & Will Blair
 */
-
 hangover = {
 	isPouring:false,
+	currentIngredient:null,
 	pour : {
 		pourStart:0,
 		pourEnd:0
-		}
-};s
+	},
+	drink : {
+		name: "foo",
+		ingredients: [{name:"bar",oz:1},{name:"baz",oz:2}]
+	},
+	processPour : function () {
+		var pour = hangover.pour;
+		var diff = pour.pourEnd - pour.PourStart;//in ms
+	}
+};
+
+
 
 if (window.DeviceOrientationEvent && window.DeviceMotionEvent) {
   window.ondeviceorientation = function(event) {
@@ -27,6 +37,7 @@ if (window.DeviceOrientationEvent && window.DeviceMotionEvent) {
 		if(hangover.isPouring) {
 			hangover.isPouring = false;
 			hangover.pourEnd = new Date();
+			
 		}
 	}
 	/*
