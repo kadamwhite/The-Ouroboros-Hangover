@@ -135,27 +135,34 @@ a {
 #bar {
     position: absolute;
     top: 280px;
-    background: url(../img/BottlesSmall.png) 0 -50px no-repeat;
+    background: url(../img/UnderBarEmptySmall.png) 0 -80px no-repeat;
     width: 320px;
-    /*height: 300px;*/
+    height: 250px;
 }
 
 
 
 #ingredients {
     padding: 0;
+    -webkit-transform: rotate(-90deg);
+    width: 200px;
 }
 #ingredients li {
     list-style-type:none;
-    padding:0;
-    margin:0;
+    /*padding:0;
+    margin:0;*/
     display:block;
-    -webkit-transform: rotate(-90deg);
+    -webkit-transform: rotate(-180deg);
+    /**/
 }
 #ingredients li a {
-    padding: 5px 20px;
-    text-align: center;
+    padding: 5px 0px 5px 100px;
+    text-align: left;
     display:block;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+
 }
 
 
