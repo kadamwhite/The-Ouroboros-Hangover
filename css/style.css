@@ -88,12 +88,31 @@ a {
 }
 
 
+#debug {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    text-align: right;
+    font-family: monospace;
+}
+#debug ul {
+    padding: 0;
+}
+#debug li {
+    list-style-type: none;
+}
+
+
 
 #room {
-    background: url(../img/background.jpg) center top no-repeat;
+    background: url(../img/BackDropSmall.png) center top no-repeat;
     width: 320px;
-    height: 275px;
+    height: 400px;
 }
+
+
+
 
 #ingredients {
     padding: 0;

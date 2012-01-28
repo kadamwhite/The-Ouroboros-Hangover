@@ -59,6 +59,9 @@ hangover.pour = (function(){
      * Conclude this pour, and announce the final duration
      */
     var endPour = function() {
+        if(pourCounts.length === 0) {
+            return;
+        }
         // Announce that the pour is complete
         $('#debug #log').append([
             '<li>',
@@ -96,15 +99,23 @@ if( window.DeviceMotionEvent ) {
         /* Update values every 10th of a second */
         //setInterval(function(){
         $('#debug #state').html([
-            'x: ', x, ' (', Math.round(((x) / 9.81) * -90), ' deg)',
+            'x: ', x,
             '<br />y: ', yRotation,
             '<br />z: ', z
         ].join(''));
         //}, 100);
 
-        $('#ingredients').on('click', 'a', function(){
+        $('#ingredients a').on('click', function(e){
+            e.preventDefault();
+            e.stopPropagation();
             //Set up the UI for a pouring action
-            $('#bottle').fadeIn();
+            $('#bottle').fadeIn(200);
+        });
+        $('#bottle').on('click', 'a.back', function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            // Cancel out of the current pour
+            hangover.pour.end();
         });
 
 
@@ -133,11 +144,15 @@ if( window.DeviceMotionEvent ) {
     //$('body').html('<h1>You should be using a GOD DAMNED PHONE</h1>');
 }
 
+var hideBottle = function() {
+    $('#bottle').fadeOut(200);
+};
+
 var millisecondsToOunces = function(milliseconds){
     var seconds = milliseconds / 1000,
         oz = seconds / 1.5; // With a standard pourer, rate is 1.5 seconds per ounce
     return oz.toFixed(2);
-}
+};
 
 /*
  Z axis - Positive perpendicular of the phone's screen
