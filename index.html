@@ -13,9 +13,10 @@
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- CSS concatenated and minified via ant build script-->
+  <!-- We aren't minifying anything yet -->
   <link rel="stylesheet" href="css/style.css">
   <!-- end CSS-->
+  <script src="js/libs/modernizr-2.0.6.min.js"></script>
 </head>
 
 <body>
@@ -32,14 +33,13 @@
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 
 
-  <!-- scripts concatenated and minified via ant build script-->
-  <script defer src="js/plugins.js"></script>
+  <!-- We aren't minifying anything yet -->
   <script defer src="js/script.js"></script>
   <!-- end scripts-->
 
 
   <script> // Change UA-XXXXX-X to be your site's ID
-    window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+    window._gaq = [['_setAccount','UA-28701099-1'],['_trackPageview'],['_trackPageLoadTime']];
     Modernizr.load({
       load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
     });
