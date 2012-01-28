@@ -4,10 +4,16 @@
 hangover = {
 	isPouring:false,
 	pour : {
-		pourStart:0,
-		pourEnd:0
-		}
-};s
+		start:0,
+		end:0
+    }
+};
+/**
+ * Return the length of the pour event, in milliseconds
+ */
+hangover.pour.time = function(){
+    return this.end - this.start;
+}
 
 if (window.DeviceOrientationEvent && window.DeviceMotionEvent) {
   window.ondeviceorientation = function(event) {
@@ -20,13 +26,13 @@ if (window.DeviceOrientationEvent && window.DeviceMotionEvent) {
 		&& (gamma <= 70 || gamma >= -70) ) {
 		//Start pouring
 		if(!hangover.isPouring) {
-			hangover.pour.pourStart = new Date();
+			hangover.pour.start = new Date();
 		}
 	} else {
 		//Done pouring
 		if(hangover.isPouring) {
 			hangover.isPouring = false;
-			hangover.pourEnd = new Date();
+			hangover.pour.end = new Date();
 		}
 	}
 	/*
