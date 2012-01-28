@@ -3,66 +3,134 @@
 
 hangover = {
     isPouring: false,
-    currentIngredient: null,
-    pour: {
-        start: 0,
-        end: 0
-    },
-    drink: {
-        name: "foo",
-        ingredients: [
-            {name: "bar", oz: 1},
-            {name: "baz", oz: 2}
-        ]
-    },
-    processPour: function() {
-        var pour = hangover.pour;
-        var diff = pour.pourEnd - pour.PourStart;//in ms
-    }
+    currentIngredient: null
 };
 /**
- * Return the length of the pour event, in milliseconds
+ * Define the pour itself
  */
-hangover.pour.time = function() {
-    return this.end - this.start;
-};
+hangover.pour = (function(){
+    var pourCounts = [],
+        startTime = null,
+        endTime = null;
+    /**
+     * Return the total length of time for this pour instance
+     * @param {Boolean} returnAsOunces Whether to return the duration as milliseconds (when false, default) or as ounces (when true)
+     */
+    var duration = function(returnAsOunces) {
+        var i = 0,
+            max = pourCounts.length,
+            totalDuration = 0;
+        for(i; i++; i< max){
+            totalDuration += pourCounts[i];
+        }
+        if(returnAsOunces) {
+            // milliseconds / 1000 = seconds / 1.5 = oz
+            totalDuration = totalDuration / 1500;
+            return +totalDuration.toFixed(2);
+        } else {
+            return totalDuration;
+        }
+    };
+    /**
+     * Set the start time for a component of this pour
+     */
+    var startPour = function(){
+        hangover.isPouring = true;
+        startTime = new Date();
+    };
+    /**
+     * Set the end time for a component of this pour, and log the duration
+     */
+    var stopPour = function(){
+        hangover.isPouring = false;
+        endTime = new Date();
+        // Log the total length of the pour to the pourCounts array
+        pourCounts.push(endTime-startTime);
+        // Reset Start and End times
+        startTime = null;
+        endTime = null;
+    };
+    /**
+     * Conclude this pour, and announce the final duration
+     */
+    var endPour = function() {
+        // Announce that the pour is complete
+        $('#debug #log').append([
+            '<li>',
+            hangover.pour.duration(false),
+            'ms (',
+            hangover.pour.duration(true),
+            ' oz)</li>'
+        ].join(''));
+        // Remove timeout variable
+        delete hangover.pour.timeout;
+        // Reset pourCounts
+        pourCounts.length = 0;
+    };
+    return {
+        start: startPour,
+        stop: stopPour,
+        end: endPour,
+        duration: duration
+    }
+})();
+/**
+ * End the pour action: Fade out the bottle, return to the bar, log the pour
+ */
 
 
-if( window.DeviceOrientationEvent && window.DeviceMotionEvent ) {
-    window.ondeviceorientation = function(event) {
-        alpha = Math.round(event.alpha);
-        beta = Math.round(event.beta);
-        gamma = Math.round(event.gamma);
+if( window.DeviceMotionEvent ) {
+    window.addEventListener('devicemotion', deviceMotionHandler, false);
+    function deviceMotionHandler(event){
+        var acceleration = event.accelerationIncludingGravity;
+
+        var x = Math.round(acceleration.x),
+            y = Math.round(acceleration.y),
+            yRotation = Math.round(((y + 9.81) / 9.81) * 90),
+            z = Math.round(acceleration.z),
+            facingUp = (z > 0) ? 1 : -1;
         /* Update values every 10th of a second */
         //setInterval(function(){
         $('#debug #state').html([
-            'alpha: ',
-            alpha,
-            '<br />beta: ',
-            beta,
-            '<br />gamma: ',
-            gamma
+            'x: ', x, ' (', Math.round(((x) / 9.81) * -90), ' deg)',
+            '<br />y: ', yRotation,
+            '<br />z: ', z
         ].join(''));
         //}, 100);
 
-        if( (90 <= alpha && alpha <= 280)
+        $('#ingredients').on('click', 'a', function(){
+            //Set up the UI for a pouring action
+            $('#bottle').fadeIn();
+        });
+
+
+        if( (-130 >= yRotation || 130 <= yRotation)
         //&& (-30 <= beta && beta <= 0)
         //&& (-70 <= gamma && gamma <= 70)
         ) {
             //Start pouring
             if( !hangover.isPouring ) {
-                hangover.isPouring = true;
-                hangover.pour.start = new Date();
+                hangover.pour.start();
                 $('#debug #pouring').html('POURING');
+                // If we're counting down to the end() of the pour, clear the timeout
+                if(typeof hangover.pour.timeout === 'number'){
+                    window.clearTimeout(hangover.pour.timeout);
+                    delete hangover.pour.timeout;
+                }
             }
         } else {
             //Done pouring
             if( hangover.isPouring ) {
-                hangover.isPouring = false;
-                hangover.pour.end = new Date();
+                hangover.pour.stop();
                 $('#debug #pouring').html('');
                 // Log the length of the pour (in ms)
-                $('#debug #log').append('<li>'+hangover.pour.time()+'ms ('+millisecondsToOunces(hangover.pour.time())+' oz)</li>');
+                //$('#debug #log').append('<li>'+hangover.pour.duration()+'ms ('+millisecondsToOunces(hangover.pour.duration())+' oz)</li>');
+                // Don't hide the bottle immediately, as the pour may resume
+                // and end several times in rapid succession. We give the user
+                // a half-second delay before we exit the pouring screen.
+                hangover.pour.timeout = window.setTimeout(function(){
+                    hangover.pour.end();
+                }, 2000);
             }
         }
     }
@@ -94,3 +162,12 @@ var millisecondsToOunces = function(milliseconds){
  left -  <= 70
  right - >= -70
  */
+
+/**
+ * Disable the default touchmove behaviors, to prevent iOS overscrolling
+ * (Via http://www.html5rocks.com/en/mobile/touch.html)
+ */
+/*
+document.body.addEventListener('touchmove', function(event) {
+    event.preventDefault();
+}, false);*/
