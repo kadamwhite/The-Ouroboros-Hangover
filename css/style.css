@@ -108,7 +108,7 @@ a {
 #room {
     background: url(../img/BackDropSmall.png) 0 -100px no-repeat;
     width: 320px;
-    height: 300px;
+    height: 350px;
 }
 
 
@@ -116,7 +116,7 @@ a {
 
 #patrons {
     width: 320px;
-    height: 300px;
+    height: 350px;
     background: url(../img/PatronSmall.png) -320px bottom no-repeat;
 }
 #patrons.active {
@@ -132,6 +132,15 @@ a {
 
 
 
+#bar {
+    position: absolute;
+    top: 280px;
+    background: url(../img/BottlesSmall.png) 0 -50px no-repeat;
+    width: 320px;
+    /*height: 300px;*/
+}
+
+
 
 #ingredients {
     padding: 0;
@@ -141,7 +150,7 @@ a {
     padding:0;
     margin:0;
     display:block;
-    width:320px;
+    -webkit-transform: rotate(-90deg);
 }
 #ingredients li a {
     padding: 5px 20px;
@@ -187,7 +196,7 @@ a {
 }
 
 @media only screen and (min-width: 768px) {
-    .warning { display: block; } /* Show iPad warning */
+    /*.warning { display: block; }*/ /* Show iPad warning */
 }
 
 

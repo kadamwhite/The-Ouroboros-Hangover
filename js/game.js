@@ -105,13 +105,14 @@ if( window.DeviceMotionEvent ) {
             e.preventDefault();
             e.stopPropagation();
             //Set up the UI for a pouring action
-            $('#bottle').fadeIn(200);
+            showBottle();
         });
-        $('#bottle').on('click', 'a.back', function(e){
+        $('#bottle a').on('click', function(e){
             e.preventDefault();
             e.stopPropagation();
             // Cancel out of the current pour
             hangover.pour.end();
+            hideBottle();
         });
 
 
@@ -140,6 +141,9 @@ if( window.DeviceMotionEvent ) {
     //$('body').html('<h1>You should be using a GOD DAMNED PHONE</h1>');
 }
 
+var showBottle = function(){
+    $('#bottle').fadeIn(200);
+};
 var hideBottle = function() {
     $('#bottle').fadeOut(200);
 };
