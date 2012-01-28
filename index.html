@@ -11,7 +11,7 @@
   <meta name="description" content="A Global Game Jam 2012 Original (tm)">
   <meta name="author" content="">
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 
   <!-- We aren't minifying anything yet -->
   <link rel="stylesheet" href="css/style.css">
@@ -20,21 +20,26 @@
 </head>
 
 <body>
-
-  <div id="debug">
-      <h1 id="pouring"></h1>
-      <p id="state"></p>
-  </div>
-
-  <div id="game">
-    <div id="room">
-		<div id="patrons"></div>
-		<div id="barTop"></div>
-	</div>
-	<div id="well">
-        <ul id="ingredients"></ul>
-	</div>
-  </div> <!--! end of #game -->
+    <div id="game">
+        <div id="room">
+            <div id="patrons"></div>
+            <div id="barTop"></div>
+        </div>
+        <div id="debug">
+            <h1 id="pouring"></h1>
+            <p id="state"></p>
+        </div>
+        <div id="well">
+            <ul id="ingredients">
+                <li><a href="javascript:;">Gin</a></li>
+                <li><a href="javascript:;">Vodka</a></li>
+                <li><a href="javascript:;">Whiskey</a></li>
+                <li><a href="javascript:;">Triple Sec</a></li>
+                <li><a href="javascript:;">Vermouth</a></li>
+                <li><a href="javascript:;">Lime Juice</a></li>
+            </ul>
+        </div>
+    </div> <!--! end of #game -->
 
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>

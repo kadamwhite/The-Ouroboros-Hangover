@@ -63,12 +63,44 @@ td { vertical-align: top; }
 
 
 /* ==|== primary styles =====================================================
-   Author: 
+   Author: K.Adam White
    ========================================================================== */
 
+body {
+    width:640px;
+    background: #000000;
+    color: #ffffff;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+a {
+    color: #fff;
+}
 
 
 
+#room {
+    background: url(../img/background.jpg) center top no-repeat;
+    width: 320px;
+    height: 275px;
+}
+
+#ingredients {
+    padding: 0;
+}
+#ingredients li {
+    list-style-type:none;
+    padding:0;
+    margin:0;
+    display:block;
+    width:320px;
+}
+#ingredients li a {
+    padding: 5px 20px;
+    text-align: center;
+    display:block;
+}
 
 
 
