@@ -45,11 +45,10 @@ if( window.DeviceOrientationEvent && window.DeviceMotionEvent ) {
         ].join(''));
         //}, 100);
 
-        if(
-            (100 <= alpha && alpha <= 270)
+        if( (90 <= alpha && alpha <= 280)
         //&& (-30 <= beta && beta <= 0)
         //&& (-70 <= gamma && gamma <= 70)
-            ) {
+        ) {
             //Start pouring
             if( !hangover.isPouring ) {
                 hangover.isPouring = true;
@@ -62,6 +61,8 @@ if( window.DeviceOrientationEvent && window.DeviceMotionEvent ) {
                 hangover.isPouring = false;
                 hangover.pour.end = new Date();
                 $('#debug #pouring').html('');
+                // Log the length of the pour (in ms)
+                $('#debug #log').append('<li>'+hangover.pour.time()+'ms ('+millisecondsToOunces(hangover.pour.time())+' oz)</li>');
             }
         }
     }
@@ -69,6 +70,11 @@ if( window.DeviceOrientationEvent && window.DeviceMotionEvent ) {
     //$('body').html('<h1>You should be using a GOD DAMNED PHONE</h1>');
 }
 
+var millisecondsToOunces = function(milliseconds){
+    var seconds = milliseconds / 1000,
+        oz = seconds / 1.5; // With a standard pourer, rate is 1.5 seconds per ounce
+    return oz.toFixed(2);
+}
 
 /*
  Z axis - Positive perpendicular of the phone's screen
