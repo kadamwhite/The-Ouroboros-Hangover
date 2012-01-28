@@ -138,7 +138,7 @@ if( window.DeviceMotionEvent ) {
         }
     }
 } else {
-    //$('body').html('<h1>You should be using a GOD DAMNED PHONE</h1>');
+    $('.warning.noAccelerometer').show();
 }
 
 var showBottle = function(){
@@ -154,24 +154,13 @@ var millisecondsToOunces = function(milliseconds){
     return oz.toFixed(2);
 };
 
-/*
- Z axis - Positive perpendicular of the phone's screen
- Y axis - Positive towards the top of the phone
- X axis - Positive towards the right side of the screen.
 
- Alpha - Rotation around the z axis. [0,360)
- right - <=270 degrees
- left  - >=100 degrees
-
- Beta - Rotation around the x axis [-180,180)
- left -  >= -30
- right-  <= 0
-
- Gamma - Rotation around the y axis [-90,90]
-
- left -  <= 70
- right - >= -70
- */
+/* Setup */
+$('#ingredients').attr('style',function(){
+    var numBottles = $(this).find('li').length,
+        width = numBottles * 50;
+    return 'width: '+parseInt(width,10)+'px';
+})
 
 /**
  * Disable the default touchmove behaviors, to prevent iOS overscrolling

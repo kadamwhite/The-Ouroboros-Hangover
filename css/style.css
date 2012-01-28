@@ -85,6 +85,8 @@ a {
     font-weight: bold;
     font-family: serif;
     text-shadow: 0 2px 0px #000;
+    position: absolute;
+    width: 280px;
 }
 
 
@@ -118,6 +120,7 @@ a {
     width: 320px;
     height: 350px;
     background: url(../img/PatronSmall.png) -320px bottom no-repeat;
+    -webkit-transform: translateZ(0);
 }
 #patrons.active {
     background-position: 90px bottom;
@@ -135,35 +138,42 @@ a {
 #bar {
     position: absolute;
     top: 280px;
-    background: url(../img/UnderBarEmptySmall.png) 0 -80px no-repeat;
+    background: url(../img/UnderBarEmptySmall.jpg) 0 -80px no-repeat;
     width: 320px;
     height: 250px;
+    overflow-x:scroll;
 }
+
 
 
 
 #ingredients {
     padding: 0;
-    -webkit-transform: rotate(-90deg);
-    width: 200px;
+    height: 150px;
+    z-index: 40;
 }
 #ingredients li {
-    list-style-type:none;
-    /*padding:0;
-    margin:0;*/
-    display:block;
-    -webkit-transform: rotate(-180deg);
-    /**/
+    width: 50px;
+    height: 190px;
+    float: left;
+    position: relative;
+    list-style-type: none;
+    background: url(../img/bottle-sprite.png) center bottom no-repeat;
+    position: relative;
 }
 #ingredients li a {
-    padding: 5px 0px 5px 100px;
-    text-align: left;
-    display:block;
+    position: absolute;
+    -webkit-transform: rotate(90deg);
+    -webkit-transform-origin: 0 100%;
+    display: block;
+    width: 90px;
+    padding: 17px 0 14px 60px;
     text-decoration: none;
     color: #fff;
-    font-weight: bold;
-
+    font-size: 14px;
 }
+
+
 
 
 
@@ -174,6 +184,7 @@ a {
     width: 320px;
     height: 480px;
     background: url(../img/bottle.jpg) center top no-repeat;
+    z-index: 80;
 }
 
 
