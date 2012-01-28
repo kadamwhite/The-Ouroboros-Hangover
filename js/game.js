@@ -17,11 +17,9 @@ hangover.pour = (function(){
      * @param {Boolean} returnAsOunces Whether to return the duration as milliseconds (when false, default) or as ounces (when true)
      */
     var duration = function(returnAsOunces) {
-        var i = 0,
-            max = pourCounts.length,
-            totalDuration = 0;
-        for(i; i++; i< max){
-            totalDuration += pourCounts[i];
+        var totalDuration = 0;
+        for( var i = 0, max = pourCounts.length; i < max; i++ ){
+            totalDuration = totalDuration + pourCounts[i];
         }
         if(returnAsOunces) {
             // milliseconds / 1000 = seconds / 1.5 = oz
@@ -36,13 +34,20 @@ hangover.pour = (function(){
      */
     var startPour = function(){
         hangover.isPouring = true;
+        $('#debug #pouring').html('POURING');
         startTime = new Date();
+        // If we're counting down to the end() of the pour, clear the timeout
+        if(typeof hangover.pour.timeout === 'number'){
+            window.clearTimeout(hangover.pour.timeout);
+            delete hangover.pour.timeout;
+        }
     };
     /**
      * Set the end time for a component of this pour, and log the duration
      */
     var stopPour = function(){
         hangover.isPouring = false;
+        $('#debug #pouring').html('');
         endTime = new Date();
         // Log the total length of the pour to the pourCounts array
         pourCounts.push(endTime-startTime);
@@ -57,9 +62,9 @@ hangover.pour = (function(){
         // Announce that the pour is complete
         $('#debug #log').append([
             '<li>',
-            hangover.pour.duration(false),
+            duration(false),
             'ms (',
-            hangover.pour.duration(true),
+            duration(true),
             ' oz)</li>'
         ].join(''));
         // Remove timeout variable
@@ -70,8 +75,7 @@ hangover.pour = (function(){
     return {
         start: startPour,
         stop: stopPour,
-        end: endPour,
-        duration: duration
+        end: endPour
     }
 })();
 /**
@@ -111,26 +115,17 @@ if( window.DeviceMotionEvent ) {
             //Start pouring
             if( !hangover.isPouring ) {
                 hangover.pour.start();
-                $('#debug #pouring').html('POURING');
-                // If we're counting down to the end() of the pour, clear the timeout
-                if(typeof hangover.pour.timeout === 'number'){
-                    window.clearTimeout(hangover.pour.timeout);
-                    delete hangover.pour.timeout;
-                }
             }
         } else {
             //Done pouring
             if( hangover.isPouring ) {
                 hangover.pour.stop();
-                $('#debug #pouring').html('');
-                // Log the length of the pour (in ms)
-                //$('#debug #log').append('<li>'+hangover.pour.duration()+'ms ('+millisecondsToOunces(hangover.pour.duration())+' oz)</li>');
                 // Don't hide the bottle immediately, as the pour may resume
                 // and end several times in rapid succession. We give the user
-                // a half-second delay before we exit the pouring screen.
+                // a brief delay before we exit the pouring screen.
                 hangover.pour.timeout = window.setTimeout(function(){
                     hangover.pour.end();
-                }, 2000);
+                }, 1500);
             }
         }
     }
