@@ -283,7 +283,7 @@ var aManWalksIntoABar = (function(){
  * *****************************************
  */
 /**
- * Disable the default touchmove behaviors, to prevent iOS overscrolling
+ * (Temporarily) disable the default touchmove behaviors, to prevent scrolling on the title screen
  * (Via http://www.html5rocks.com/en/mobile/touch.html)
  */
 var disableScrolling = function(event) {
