@@ -4,7 +4,8 @@
 hangover = {
     isPouring: false,
     currentIngredient: null,
-    patrons: []
+    patrons: [],
+    counter: 0
 };
 
 /* Setup */
@@ -67,7 +68,7 @@ hangover.pour = (function(){
      */
     var startPour = function(){
         hangover.isPouring = true;
-        $('#pour-screen .bottle').addClass('pouring');
+        $('#pour-screen').addClass('pouring');
         if(hangover.debugMode) {
             $('#debug #pouring').html('POURING');
         }
@@ -83,7 +84,7 @@ hangover.pour = (function(){
      */
     var stopPour = function(){
         hangover.isPouring = false;
-        $('#pour-screen .bottle').removeClass('pouring');
+        $('#pour-screen').removeClass('pouring');
         $('#debug #pouring').html('');
         endTime = new Date();
         // Log the total length of the pour to the pourCounts array
@@ -112,7 +113,7 @@ hangover.pour = (function(){
         // Reset pourCounts
         pourCounts.length = 0;
         // Hide bottle TODO: Does this actually belong here?
-        hideBottle();
+        //hideBottle();
     };
     return {
         init: initializePour,
@@ -217,8 +218,11 @@ function deviceMotionHandler(event){
         ].join(''));
     }
 
-	if(hangover.isPouring){
+	if(hangover.isPouring && hangover.counter > 5){
 		document.getElementById("glass").style.webkitTransform = "rotate(" + Math.round(((acceleration.x) / 9.81) * 90 + 180) + "deg)";
+		hangover.counter = 0;
+	} else {
+		hangover.counter++;
 	}
 
     if( -130 >= rotation || 130 <= rotation ) {

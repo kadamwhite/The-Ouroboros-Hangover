@@ -269,7 +269,7 @@ a {
 	position: relative;
     -webkit-transition: margin 1s ease-out;
 }
-#pour-screen .bottle.pouring {
+#pour-screen.pouring .bottle {
     margin-top: 150px;
 }
 #pour-screen .bottle-label {
@@ -304,12 +304,16 @@ a {
 }
 
 #pour-screen #glass {
+	opacity: 0;
 	background: url(../img/rocks-glass.png) center top no-repeat;
 	width: 150px;
 	height: 160px;
 	position: absolute;
+	-webkit-transition: all .5s ease-out;
 }
-
+#pour-screen.pouring #glass {
+	opacity: 1;
+}
 
 
 
