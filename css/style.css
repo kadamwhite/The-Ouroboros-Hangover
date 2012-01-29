@@ -218,6 +218,12 @@ a {
     overflow-x: scroll;
 }
 
+#bar .console {
+    font-size: 12px;
+    margin: 0;
+    position: absolute;
+}
+
 
 
 

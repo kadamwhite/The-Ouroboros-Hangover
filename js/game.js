@@ -296,7 +296,7 @@ document.body.addEventListener('touchmove', disableScrolling, false);
 hangover.drinks = {
     martini: new Drink("Gin Martini", [
         {name: 'Gin', oz: 2},
-        {name: 'Dry Vermouth', oz: .5}
+        {name: 'Vermouth', oz: .5}
     ]),
     capeCod: new Drink("Cape Cod", [
         {name: 'Vodka', oz: 2},
@@ -312,8 +312,8 @@ hangover.drinks = {
 
 
 (function() {
-    patronA = new Patron(hangover.drinks.martini, {order: 'I want a Gin Martini, stirred.'});
-    //patronB = new Patron(hangover.drinks.cosmopolitan,{order:'I\'ll have a Cosmo'});
+    var patronA = new Patron(hangover.drinks.martini, {order: 'I want a Gin Martini, stirred.'});
+    //var patronB = new Patron(hangover.drinks.cosmopolitan, {order:'Gimme a Cosmo'});
     //patronC = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'});
     hangover.patrons.add(patronA);
     //hangover.patrons.add(patronB);

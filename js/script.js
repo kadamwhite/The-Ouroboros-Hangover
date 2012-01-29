@@ -84,10 +84,10 @@ Patron.prototype.messages = {
     success: 'Delicious!',
     failure: 'Ugh, what IS this crap!?'
     /* Messages should contain these values:
-     messages.order : 'What to say when you order the drink',
-     messages.success : 'What to say if it is made correctly',
-     messages.failure : 'What to say if it is NOT made correctly'
-     */
+        messages.order : 'What to say when you order the drink',
+        messages.success : 'What to say if it is made correctly',
+        messages.failure : 'What to say if it is NOT made correctly'
+    */
 };
 /**
  * Add a pour to a patron's drink
@@ -112,3 +112,57 @@ Patron.prototype.drink = (function() {
         get: getDrink
     };
 })();
+Patron.prototype.evaluateDrink = function(){
+    var drinkTheyOrdered = this.order.ingredients;
+    var drinkYouMade = this.drink.get();
+    var quantityDelta = 0;
+    var score = {
+        correctIngredients: 0,
+        missedIngredients: 0,
+        wrongIngredients: 0,
+        goodPours:0,
+        badPours:0,
+        quantities: []
+    };
+    for( var i = 0, max = drinkTheyOrdered.length; i < max; i++ ) {
+        if(drinkYouMade[drinkTheyOrdered[i].name]){
+            score.correctIngredients ++;
+            $('#bar .console').append('Good, you remembered the '+drinkTheyOrdered[i].name+'; ');
+            quantityDelta = drinkTheyOrdered[i].oz - drinkYouMade[drinkTheyOrdered[i].name];
+            quantityDelta = +quantityDelta.toFixed(2);
+            if(Math.abs(quantityDelta) < .25) {
+                score.goodPours++;
+            } else {
+                score.badPours++;
+            }
+            score.quantities.push(quantityDelta);
+            $('#bar .console').append('You were off by '+quantityDelta+'oz;');
+        } else {
+            score.missedIngredients ++;
+            $('#bar .console').append('You Forgot:'+drinkTheyOrdered[i].name+'; ');
+        }
+        // We are done, remove this property of the object
+        delete drinkYouMade[drinkTheyOrdered[i].name];
+    }
+    for(var extras in drinkYouMade) {
+        $('#bar .console').append('Why did you add ' + extras + '?!');
+        score.wrongIngredients ++;
+    }
+    /*var finalScore =
+        // First, 1-10, tally what percentage of the ingredients they remembered
+        (drinkTheyOrdered.length / score.correctIngredients * 10) +
+        score.goodPours -
+        // Remove a point for anything they missed or added by mistake
+        score.wrongIngredients -
+        score.badPours;*/
+    /*console.log('Score: '+finalScore,
+        score.missedIngredients < score.correctIngredients,
+        score.badPours < score.goodPours,
+        score.wrongIngredients
+    );*/
+    return (
+        (score.missedIngredients < score.correctIngredients) &&
+        (score.badPours < score.goodPours) &&
+        !score.wrongIngredients
+    );
+};
