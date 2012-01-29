@@ -134,7 +134,10 @@ hangover.pour = (function() {
         // Reset pourCounts
         pourCounts.length = 0;
         // Hide bottle TODO: Does this actually belong here?
-        //hideBottle();
+        hideBottle();
+        if(!$('.message.serve').is(":visible")){
+            $('.message.serve').fadeIn(200);
+        }
     };
     return {
         init: initializePour,
@@ -193,7 +196,11 @@ $('#pour-screen').on('click', 'a', function(e) {
 
 // Open the message box
 var showMessage = function(message, drink) {
-    var $message = $('.message');
+    // Reset
+    $('.message-hint, a.close').hide();
+    $('.message-order, a.help').show();
+    // Order
+    var $message = $('.message.order');
     $message.find('p.message-order').text(message);
     $message.find('p.message-hint').html(drink.recipe());
     // Step through screens, to make sure people see the recipe
@@ -202,16 +209,48 @@ var showMessage = function(message, drink) {
     $('#overlay').fadeIn(200);
 };
 // Inside the message box
-$('.message').on('click', 'a.help', function() {
+$('.message.order').on('click', 'a.help', function() {
     $(this).fadeOut(200);
     $('.message-order, a.help').fadeOut(200);
     $('.message-hint, a.close').fadeIn(200);
 });
 // Close the message box
-$('.message').on('click', 'a.close', function() {
-    $('.message, #overlay').fadeOut(200);
+$('.message.order').on('click', 'a.close', function() {
+    $('.message.order, #overlay').fadeOut(200);
     // Scroll down
     $('html, body').animate({scrollTop: $('body').height()}, 800);
+});
+
+// SERVE the drink
+$('.message.serve').on('click', 'a.serve', function() {
+    var thisPatron = hangover.patrons.current();
+    var theyLikedIt = thisPatron.evaluateDrink();
+    if( theyLikedIt ){
+        $('.message.serve p.serve').hide();
+        $('.message.serve p.success span').text(thisPatron.messages.success);
+        $('.message.serve p.success').show();
+    } else {
+        $('.message.serve p.serve').hide();
+        $('.message.serve p.failure span').text(thisPatron.messages.failure);
+        $('.message.serve p.failure').show();
+    }
+});
+// TRY AGAIN button
+$('.message.serve').on('click', 'a.retry', function() {
+    var thisPatron = hangover.patrons.current();
+    $('.message.serve p.failure').hide();
+    $('.message.serve p.failure span').text('');
+    $('.message.serve p.serve').show();
+    thisPatron.drink.reset();
+    $('.message.serve').hide();
+    // Reset feedback
+    $('#bar .console').text('');
+    showMessage(thisPatron.messages.order, thisPatron.order);
+});
+// YOU GOT IT RIGHT button
+$('.message.serve').on('click', 'a.continue', function(){
+    $('#patrons').addClass('done');
+    hangover.patrons.next();
 });
 
 

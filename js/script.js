@@ -107,9 +107,14 @@ Patron.prototype.drink = (function() {
         // TODO: Add and return all the ingredients in the drink
         return pourResults;
     };
+    var reset = function() {
+        // blow away progress
+        pourResults = {};
+    };
     return {
         add: addIngredient,
-        get: getDrink
+        get: getDrink,
+        reset: reset
     };
 })();
 Patron.prototype.evaluateDrink = function(){
@@ -148,18 +153,6 @@ Patron.prototype.evaluateDrink = function(){
         $('#bar .console').append('Why did you add ' + extras + '?!');
         score.wrongIngredients ++;
     }
-    /*var finalScore =
-        // First, 1-10, tally what percentage of the ingredients they remembered
-        (drinkTheyOrdered.length / score.correctIngredients * 10) +
-        score.goodPours -
-        // Remove a point for anything they missed or added by mistake
-        score.wrongIngredients -
-        score.badPours;*/
-    /*console.log('Score: '+finalScore,
-        score.missedIngredients < score.correctIngredients,
-        score.badPours < score.goodPours,
-        score.wrongIngredients
-    );*/
     return (
         (score.missedIngredients < score.correctIngredients) &&
         (score.badPours < score.goodPours) &&
