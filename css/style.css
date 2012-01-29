@@ -145,7 +145,7 @@ a {
     -webkit-transform: translateZ(0);
 }
 #patrons.active {
-    background-position: 90px bottom;
+    background-position: 0 bottom;
     -webkit-transition: all 2s ease-out;
     transition: all 2s ease-in;
 }
@@ -160,7 +160,7 @@ a {
 #overlay {
     width: 320px;
     height: 100%;
-    background: /*url(../img/dark-png.png)*/;
+    /*background: url(../img/dark-png.png)*/;
     z-index: 40;
     position: absolute;
     display:none;
@@ -172,7 +172,7 @@ a {
     display: none;
     width: 240px;
     height: 100px;
-    background: /*url(../img/dark-png.png)*/;
+    /*background: url(../img/dark-png.png)*/;
     border-radius: 10px;
     border: groove white;
     margin: 170px 40px;

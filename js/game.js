@@ -129,6 +129,7 @@ hangover.pour = (function() {
                 ' oz)</li>'
             ].join(''));
         }
+        hangover.patrons.current().drink.add(hangover.currentIngredient,duration(true))
         // Remove timeout variable
         delete hangover.pour.timeout;
         // Reset pourCounts
@@ -147,9 +148,6 @@ hangover.pour = (function() {
         timeoutLength: 1000 || parseInt(urlVars["timeout"], 10)
     }
 })();
-/**
- * End the pour action: Fade out the bottle, return to the bar, log the pour
- */
 
 
 if( window.DeviceMotionEvent ) {
@@ -167,9 +165,13 @@ var showBottle = function(name) {
     $('html, body').animate({scrollTop: 0}, 800);
     hangover.pour.ready = true;
 };
+/**
+ * End the pour action: Fade out the bottle, return to the bar, log the pour
+ */
 var hideBottle = function() {
     $('#pour-screen').fadeOut(200);
     hangover.pour.ready = false;
+    hangover.currentIngredient = '';
 };
 
 
@@ -351,9 +353,9 @@ hangover.drinks = {
 
 
 (function() {
-    var patronA = new Patron(hangover.drinks.martini, {order: 'I want a Gin Martini, stirred.'});
-    //var patronB = new Patron(hangover.drinks.cosmopolitan, {order:'Gimme a Cosmo'});
-    //patronC = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'});
+    var patronA = new Patron(hangover.drinks.martini, {order: 'I want a Gin Martini, stirred.'}, 'img/ouro-sober.png');
+    //var patronB = new Patron(hangover.drinks.cosmopolitan, {order:'Gimme a Cosmo'}, 'img/ouro-drunk.png');
+    //patronC = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'}, 'img/ouro-drunk.png');
     hangover.patrons.add(patronA);
     //hangover.patrons.add(patronB);
     //hangover.patrons.add(patronC);
