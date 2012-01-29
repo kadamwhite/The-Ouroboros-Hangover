@@ -102,13 +102,13 @@ if( window.DeviceMotionEvent ) {
 
         var rotation = Math.round(((acceleration.y + 9.81) / 9.81) * 90);
         /* Update values every 10th of a second */
-        setInterval(function(){
+        //setInterval(function(){
             $('#debug #state').html([
                 'rotation: ',
                 rotation,
                 '&deg;'
             ].join(''));
-        }, 100);
+        //}, 100);
 
         if( -130 >= rotation || 130 <= rotation ) {
             //Start pouring
@@ -134,7 +134,7 @@ if( window.DeviceMotionEvent ) {
 
 var showBottle = function(name){
     $('#pour-screen')
-        .find('.bottle-label')
+        .find('.bottle-label h2')
         .text(name)
     .end()
     .fadeIn(200);

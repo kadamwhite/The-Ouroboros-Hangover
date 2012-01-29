@@ -240,7 +240,19 @@ a {
     position: absolute;
     text-align: center;
     width: 320px;
-    top: 256px;
+    top: 266px;
+}
+.bottle-label p {
+    font-size: 14px;
+    width: 140px;
+    margin: auto;
+    padding: 0;
+    font-style: italic;
+    font-weight: bold;
+}
+.bottle-label h2 {
+    margin: 5px 0;
+    font-size: 24px;
 }
 #pour-screen a {
     color: #fff;
