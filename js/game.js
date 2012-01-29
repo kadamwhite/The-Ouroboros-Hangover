@@ -319,17 +319,22 @@ function deviceMotionHandler(event) {
 var aManWalksIntoABar = (function() {
     var patronIndex = 0;
     return function() {
-        var thisPatron = hangover.patrons.current(),
-            $patrons = $('#patrons');
-        // Clear out last patron
-        $patrons.hide().removeClass('active').removeClass('done').show();
-            // Switch to new patron
-        $patrons.css('background-image', 'url(' + thisPatron.image + ')');
-        $patrons.addClass('active');
-        setTimeout(function() {
-            showMessage(thisPatron.messages.order, thisPatron.order);
-        }, 2500);
-        patronIndex++;
+        try{
+            var thisPatron = hangover.patrons.current(),
+                $patrons = $('#patrons');
+            // Clear out last patron
+            $patrons.hide().removeClass('active').removeClass('done').show();
+                // Switch to new patron
+            $patrons.css('background-image', 'url(' + thisPatron.image + ')');
+            $patrons.addClass('active');
+            setTimeout(function() {
+                showMessage(thisPatron.messages.order, thisPatron.order);
+            }, 2500);
+            patronIndex++;
+        } catch(err){
+            $('#end-screen').fadeIn(1000);
+            document.body.addEventListener('touchmove', disableScrolling, false);
+        }
     };
 })();
 
@@ -375,13 +380,13 @@ hangover.drinks = {
     var allPatrons = [
         new Patron(hangover.drinks.martini, {order: 'I want a Gin Martini, stirred.'}, 'img/ouro-sober.png'),
         new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'}, 'img/ouro-drunk.png'),
-        new Patron(hangover.drinks.whiskeySour, {order:'Iiiii wanna WHISHkey shour, '}, 'img/ouro-drunker.png'),
-        new Patron(hangover.drinks.cosmopolitan, {order:'Gimme a god damned Cosmo'}, 'img/ouro-angry.png')
+        new Patron(hangover.drinks.whiskeySour, {order:'Iiiii wanna WHISHkey shour, '}, 'img/ouro-angry.png')/*,
+        new Patron(hangover.drinks.cosmopolitan, {order:'Gimme a god damned Cosmo'}, 'img/ouro-angry.png')*/
     ];
     hangover.patrons.add(allPatrons[0]);
     hangover.patrons.add(allPatrons[1]);
     hangover.patrons.add(allPatrons[2]);
-    hangover.patrons.add(allPatrons[3]);
+    //hangover.patrons.add(allPatrons[3]);
 })();
 
 
