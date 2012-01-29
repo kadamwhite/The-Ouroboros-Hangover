@@ -269,8 +269,8 @@ var aManWalksIntoABar = (function(){
 (function(){
     var drinkOrders = [],
         martini = new Drink("Gin Martini",[
-            Ingredient('Gin',2),
-            Ingredient('Dry Vermouth',.5)
+	        {name:'Gin',oz:2},
+	        {name:'Dry Vermouth',oz:.5}
         ]);
     drinkOrders.push(martini);
 
