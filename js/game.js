@@ -61,6 +61,7 @@ hangover.pour = (function(){
      */
     var initializePour = function(name){
         hangover.currentIngredient = name;
+	    // TODO: Check the active recipe to see if this ingredient is even relevant
         showBottle(name);
     };
     /**
@@ -219,7 +220,7 @@ function deviceMotionHandler(event){
     }
 
 	if(hangover.isPouring && hangover.counter > 5){
-		document.getElementById("glass").style.webkitTransform = "rotate(" + Math.round(((acceleration.x) / 9.81) * 90 + 180) + "deg)";
+		document.getElementById("glass").style.webkitTransform = "rotate(" + Math.round(((acceleration.x) / 9.81) * 90 * .75 + 180) + "deg)";
 		hangover.counter = 0;
 	} else {
 		hangover.counter++;
@@ -275,16 +276,6 @@ var aManWalksIntoABar = (function(){
 
 
 
-(function(){
-    var drinkOrders = [],
-        martini = new Drink("Gin Martini",[
-	        {name:'Gin',oz:2},
-	        {name:'Dry Vermouth',oz:.5}
-        ]);
-    drinkOrders.push(martini);
-
-    hangover.patrons.push(new Patron(drinkOrders[0],{order:'I want a Gin Martini, stirred.'}));
-})();
 
 
 /**
@@ -302,13 +293,43 @@ document.body.addEventListener('touchmove', disableScrolling, false);
 
 
 // First Customer
+hangover.drinks = {
+	martini: new Drink("Gin Martini",[
+        {name:'Gin',oz:2},
+        {name:'Dry Vermouth',oz:.5}
+    ]),
+	capeCod: new Drink("Cape Cod",[
+		{name:'Vodka',oz:2},
+		{name:'Cranberry',oz:3}
+	]),
+	cosmopolitan: new Drink("Cosmopolitan",[
+		{name:'Vodka',oz:1.25},
+		{name:'Triple Sec',oz:.25},
+		{name:'Lime Juice',oz:.25},
+		{name:'Cranberry',oz:.25}
+	])
+};
+
+
+
+(function(){
+	patronA = new Patron(hangover.drinks.martini,{order:'I want a Gin Martini, stirred.'});
+	patronB = new Patron(hangover.drinks.cosmopolitan,{order:'I\'ll have a Cosmo'});
+	patronC = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'});
+    hangover.patrons.push(patronA);
+	hangover.patrons.push(patronB);
+	hangover.patrons.push(patronC);
+})();
+
+
 $(document).ready(function(){
     $('#title-screen p').text('tap to begin');
     $('#title-screen').on('click',function(){
         // Re-enable scrolling
         document.body.removeEventListener('touchmove', disableScrolling, false);
+	    delete disableScrolling;
         $('#title-screen').fadeOut(600);
         // The first guest will enter in one second
-        //setTimeout(aManWalksIntoABar, 1000);
+        setTimeout(aManWalksIntoABar, 1000);
     });
 });

@@ -58,7 +58,7 @@ function Patron(drink,messages,image){
     this.image = image || 'img/PatronSmall.png';
     // Guard against invocation of Patron() without the new keyword
     if( !(this instanceof Patron) ) {
-        return new Ingredient(message, drink);
+        return new Patron(drink,messages,image);
     }
     this.drink = drink;
     // Override the default order (we need to know what they want)
