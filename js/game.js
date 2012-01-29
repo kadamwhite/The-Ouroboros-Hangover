@@ -67,7 +67,10 @@ hangover.pour = (function(){
      */
     var startPour = function(){
         hangover.isPouring = true;
-        $('#debug #pouring').html('POURING');
+        $('#pour-screen .bottle').addClass('pouring');
+        if(hangover.debugMode) {
+            $('#debug #pouring').html('POURING');
+        }
         startTime = new Date();
         // If we're counting down to the end() of the pour, clear the timeout
         if(typeof hangover.pour.timeout === 'number'){
@@ -80,6 +83,7 @@ hangover.pour = (function(){
      */
     var stopPour = function(){
         hangover.isPouring = false;
+        $('#pour-screen .bottle').removeClass('pouring');
         $('#debug #pouring').html('');
         endTime = new Date();
         // Log the total length of the pour to the pourCounts array
