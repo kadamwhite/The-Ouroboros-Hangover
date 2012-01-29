@@ -35,7 +35,19 @@ Drink.prototype.volume = function() {
  */
 Drink.prototype.complexity = function() {
     return this.ingredients.length;
-}
+};
+Drink.prototype.recipe = function() {
+    var recipe = '<em><strong>'+this.name+'</strong></em><br />';
+    for(var i = 0, max = this.ingredients.length; i < max; i++){
+        recipe = [recipe,
+            this.ingredients[i].oz,
+            'oz ',
+            this.ingredients[i].name,
+            '<br />'
+        ].join('');
+    }
+    return recipe;
+};
 
 /**
  * Creates an instance of Ingredient
@@ -56,3 +68,29 @@ function Ingredient(name, quantityInOunces) {
         oz: quantityInOunces
     };
 }
+
+
+/**
+ * Creates an instance of Patron
+ */
+function Patron(drink,messages,image){
+    // Default image
+    this.image = image || 'img/PatronSmall.png';
+    // Guard against invocation of Patron() without the new keyword
+    if( !(this instanceof Patron) ) {
+        return new Ingredient(message, drink);
+    }
+    this.drink = drink;
+    // Override the default order (we need to know what they want)
+    this.messages.order = messages.order || 'I\'ll have a '+drink.name;
+}
+Patron.prototype.messages = {
+    order: 'I\'ll have the usual',
+    success: 'Delicious!',
+    failure: 'Ugh, what IS this crap!?'
+    /* Messages should contain these values:
+    messages.order : 'What to say when you order the drink',
+    messages.success : 'What to say if it is made correctly',
+    messages.failure : 'What to say if it is NOT made correctly'
+    */
+};

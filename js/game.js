@@ -3,7 +3,8 @@
 
 hangover = {
     isPouring: false,
-    currentIngredient: null
+    currentIngredient: null,
+    patrons: []
 };
 /**
  * Define the pour itself
@@ -28,6 +29,13 @@ hangover.pour = (function(){
         } else {
             return totalDuration;
         }
+    };
+    /**
+     * Initialize the pour: Specify the liquor used, and enable the bottle view
+     */
+    var initializePour = function(name){
+        hangover.currentIngredient = name;
+        showBottle(name);
     };
     /**
      * Set the start time for a component of this pour
@@ -76,6 +84,7 @@ hangover.pour = (function(){
         pourCounts.length = 0;
     };
     return {
+        init: initializePour,
         start: startPour,
         stop: stopPour,
         end: endPour
@@ -101,25 +110,7 @@ if( window.DeviceMotionEvent ) {
             ].join(''));
         }, 100);
 
-        $('#ingredients a').on('click', function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            //Set up the UI for a pouring action
-            showBottle();
-        });
-        $('#bottle a').on('click', function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            // Cancel out of the current pour
-            hangover.pour.end();
-            hideBottle();
-        });
-
-
-        if( ( -130 >= rotation || 130 <= rotation )
-        //&& (-30 <= beta && beta <= 0)
-        //&& (-70 <= gamma && gamma <= 70)
-        ) {
+        if( -130 >= rotation || 130 <= rotation ) {
             //Start pouring
             if( !hangover.isPouring ) {
                 hangover.pour.start();
@@ -141,18 +132,21 @@ if( window.DeviceMotionEvent ) {
     $('.warning.noAccelerometer').show();
 }
 
-var showBottle = function(){
-    $('#bottle').fadeIn(200);
+var showBottle = function(name){
+    $('#pour-screen')
+        .find('.bottle-label')
+        .text(name)
+    .end()
+    .fadeIn(200);
+    $('html, body').animate({scrollTop: 0}, 800);
 };
 var hideBottle = function() {
-    $('#bottle').fadeOut(200);
+    $('#pour-screen').fadeOut(200);
 };
 
-var millisecondsToOunces = function(milliseconds){
-    var seconds = milliseconds / 1000,
-        oz = seconds / 1.5; // With a standard pourer, rate is 1.5 seconds per ounce
-    return oz.toFixed(2);
-};
+
+
+
 
 
 /* Setup */
@@ -160,13 +154,89 @@ $('#ingredients').attr('style',function(){
     var numBottles = $(this).find('li').length,
         width = numBottles * 50;
     return 'width: '+parseInt(width,10)+'px';
-})
+});
+
+
+
+
 
 /**
- * Disable the default touchmove behaviors, to prevent iOS overscrolling
- * (Via http://www.html5rocks.com/en/mobile/touch.html)
+ * EVENT HANDLERS
+ * *******************************************
  */
-/*
-document.body.addEventListener('touchmove', function(event) {
-    event.preventDefault();
-}, false);*/
+// Initialize the pour mode
+$('#ingredients').on('click', 'a', function(e){
+    var liquorName = $(this).text();
+    e.preventDefault();
+    e.stopPropagation();
+    //Set up the UI for a pouring action
+    hangover.pour.init(liquorName);
+});
+// Close the pour mode
+$('#pour-screen').on('click', 'a', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    // Cancel out of the current pour
+    hangover.pour.end();
+    // Hide bottle TODO: Does this actually belong here?
+    hideBottle();
+});
+// Close the request pop-up
+$('.message').on('click','a.close',function(){
+    $('.message').fadeOut(200);
+    // Scroll down
+    $('html, body').animate({scrollTop: $('body').height()}, 800);
+});
+$('.message').on('click','a.help',function(){
+    $(this).fadeOut(200);
+    $('.message-order').fadeOut(200);
+    $('.message-hint').fadeIn(200);
+});
+
+var showMessage = function(message, drink){
+    var $message = $('.message');
+    $message.find('p.message-order').text(message);
+    $message.find('p.message-hint').html(drink.recipe());
+    $message.fadeIn(200);
+};
+
+
+
+
+
+/**
+ * GAMEPLAY LOGIC
+ * ******************************************
+ */
+var aManWalksIntoABar = (function(){
+    var patronIndex = 0;
+    return function(){
+        var thisPatron = hangover.patrons[patronIndex];
+        // Clear out last patron
+        $('#patrons').hide().removeClass('active').removeClass('done')
+            // Switch to new patron
+            .css('background-image','url('+thisPatron.image+')')
+            // Move patron on-screen
+            .show().addClass('active');
+        setTimeout(function(){
+            showMessage(thisPatron.messages.order, thisPatron.drink);
+        }, 2500);
+        patronIndex++;
+    };
+})();
+
+
+
+(function(){
+    var drinkOrders = [],
+        martini = new Drink("Martini",[
+            new Ingredient('Gin',2),
+            new Ingredient('Dry Vermouth',.5)
+        ]);
+    drinkOrders.push(martini);
+
+    hangover.patrons.push(new Patron(drinkOrders[0],{order:'I want a Gin Martini, stirred.'}));
+
+    // First Customer
+    aManWalksIntoABar();
+})();
