@@ -314,11 +314,11 @@ hangover.drinks = {
 
 (function(){
 	patronA = new Patron(hangover.drinks.martini,{order:'I want a Gin Martini, stirred.'});
-	patronB = new Patron(hangover.drinks.cosmopolitan,{order:'I\'ll have a Cosmo'});
-	patronC = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'});
+	//patronB = new Patron(hangover.drinks.cosmopolitan,{order:'I\'ll have a Cosmo'});
+	//patronC = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'});
     hangover.patrons.push(patronA);
-	hangover.patrons.push(patronB);
-	hangover.patrons.push(patronC);
+	//hangover.patrons.push(patronB);
+	//hangover.patrons.push(patronC);
 })();
 
 

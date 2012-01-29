@@ -74,3 +74,14 @@ Patron.prototype.messages = {
     messages.failure : 'What to say if it is NOT made correctly'
     */
 };
+Patron.prototype.give = (function() {
+    pourResults = {};
+    var addPour = function(ingredient, quantity) {
+        if(pourResults.ingredient) {
+            pourResults[ingredient] += quantity;
+        } else {
+            pourResults[ingredient] = quantity;
+        }
+    };
+    return addPour;
+})();
