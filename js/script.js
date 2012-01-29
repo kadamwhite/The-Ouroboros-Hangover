@@ -37,8 +37,8 @@ Drink.prototype.complexity = function() {
     return this.ingredients.length;
 };
 Drink.prototype.recipe = function() {
-    var recipe = '<em><strong>'+this.name+'</strong></em><br />';
-    for(var i = 0, max = this.ingredients.length; i < max; i++){
+    var recipe = '<em><strong>' + this.name + '</strong></em><br />';
+    for( var i = 0, max = this.ingredients.length; i < max; i++ ) {
         recipe = [recipe,
             this.ingredients[i].oz,
             'oz ',
@@ -53,40 +53,41 @@ Drink.prototype.recipe = function() {
  * TODO: redundant to the above, there can only be one
  */
 Drink.prototype.getDrink = function() {
-	var drink = {};
-    for(var i = 0, max = this.ingredients.length; i < max; i++){
+    var drink = {};
+    for( var i = 0, max = this.ingredients.length; i < max; i++ ) {
         drink[ingredients[i].name] = {
-	        name: this.ingredients[i].name,
-	        oz: this.ingredients[i].oz
+            name: this.ingredients[i].name,
+            oz: this.ingredients[i].oz
         };
     }
-	return drink;
+    return drink;
 };
 
 
 /**
  * Creates an instance of Patron
  */
-function Patron(drink,messages,image){
+function Patron(drink, messages, image) {
     // Default image
     this.image = image || 'img/PatronSmall.png';
     // Guard against invocation of Patron() without the new keyword
     if( !(this instanceof Patron) ) {
-        return new Patron(drink,messages,image);
+        return new Patron(drink, messages, image);
     }
     this.order = drink;
     // Override the default order (we need to know what they want)
-    this.messages.order = messages.order || 'I\'ll have a '+drink.name;
-};
+    this.messages.order = messages.order || 'I\'ll have a ' + drink.name;
+}
+;
 Patron.prototype.messages = {
     order: 'I\'ll have the usual',
     success: 'Delicious!',
     failure: 'Ugh, what IS this crap!?'
     /* Messages should contain these values:
-    messages.order : 'What to say when you order the drink',
-    messages.success : 'What to say if it is made correctly',
-    messages.failure : 'What to say if it is NOT made correctly'
-    */
+     messages.order : 'What to say when you order the drink',
+     messages.success : 'What to say if it is made correctly',
+     messages.failure : 'What to say if it is NOT made correctly'
+     */
 };
 /**
  * Add a pour to a patron's drink
@@ -96,18 +97,18 @@ Patron.prototype.messages = {
 Patron.prototype.drink = (function() {
     var pourResults = {};
     var addIngredient = function(ingredient, quantity) {
-        if(pourResults[ingredient]) {
+        if( pourResults[ingredient] ) {
             pourResults[ingredient] += quantity;
         } else {
             pourResults[ingredient] = quantity;
         }
     };
-	var getDrink = function() {
-		// TODO: Add and return all the ingredients in the drink
-		return pourResults;
-	};
-	return {
-		add: addIngredient,
-		get: getDrink
-	};
+    var getDrink = function() {
+        // TODO: Add and return all the ingredients in the drink
+        return pourResults;
+    };
+    return {
+        add: addIngredient,
+        get: getDrink
+    };
 })();

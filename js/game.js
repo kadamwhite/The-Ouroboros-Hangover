@@ -4,33 +4,33 @@
 hangover = {
     isPouring: false,
     currentIngredient: null,
-    patrons: (function(){
-	    var patronArray = [];
-	    var addPatron = function(patron) {
-		    patronArray.push(patron);
-	    };
-	    var currentPatron = function(){
-		    // Active patron will always be the first
-		    return patronArray[0];
-	    };
-	    var nextPatron = function() {
-		    patronArray.shift();
-		    return patronArray[0];
-	    };
-	    return {
-		    current: currentPatron,
-		    add: addPatron,
-		    next: nextPatron
-	    }
+    patrons: (function() {
+        var patronArray = [];
+        var addPatron = function(patron) {
+            patronArray.push(patron);
+        };
+        var currentPatron = function() {
+            // Active patron will always be the first
+            return patronArray[0];
+        };
+        var nextPatron = function() {
+            patronArray.shift();
+            return patronArray[0];
+        };
+        return {
+            current: currentPatron,
+            add: addPatron,
+            next: nextPatron
+        }
     })(),
     counter: 0
 };
 
 /* Setup */
-$('#ingredients').attr('style',function(){
+$('#ingredients').attr('style', function() {
     var numBottles = $(this).find('li').length,
         width = numBottles * 50;
-    return 'width: '+parseInt(width,10)+'px';
+    return 'width: ' + parseInt(width, 10) + 'px';
 });
 var urlVars = (function() {
     var map = {},
@@ -42,7 +42,7 @@ var urlVars = (function() {
     return map;
 })();
 
-if(urlVars["debug"] === "true") {
+if( urlVars["debug"] === "true" ) {
     hangover.debugMode = true;
     $('body').addClass('debug');
 } else {
@@ -53,7 +53,7 @@ if(urlVars["debug"] === "true") {
 /**
  * Define the pour itself
  */
-hangover.pour = (function(){
+hangover.pour = (function() {
     var pourCounts = [],
         startTime = null,
         endTime = null;
@@ -63,10 +63,10 @@ hangover.pour = (function(){
      */
     var duration = function(returnAsOunces) {
         var totalDuration = 0;
-        for( var i = 0, max = pourCounts.length; i < max; i++ ){
+        for( var i = 0, max = pourCounts.length; i < max; i++ ) {
             totalDuration = totalDuration + pourCounts[i];
         }
-        if(returnAsOunces) {
+        if( returnAsOunces ) {
             // milliseconds / 1000 = seconds / 1.5 = oz
             totalDuration = totalDuration / 1500;
             return +totalDuration.toFixed(2);
@@ -77,23 +77,23 @@ hangover.pour = (function(){
     /**
      * Initialize the pour: Specify the liquor used, and enable the bottle view
      */
-    var initializePour = function(name){
+    var initializePour = function(name) {
         hangover.currentIngredient = name;
-	    // TODO: Check the active recipe to see if this ingredient is even relevant
+        // TODO: Check the active recipe to see if this ingredient is even relevant
         showBottle(name);
     };
     /**
      * Set the start time for a component of this pour
      */
-    var startPour = function(){
+    var startPour = function() {
         hangover.isPouring = true;
         $('#pour-screen').addClass('pouring');
-        if(hangover.debugMode) {
+        if( hangover.debugMode ) {
             $('#debug #pouring').html('POURING');
         }
         startTime = new Date();
         // If we're counting down to the end() of the pour, clear the timeout
-        if(typeof hangover.pour.timeout === 'number'){
+        if( typeof hangover.pour.timeout === 'number' ) {
             window.clearTimeout(hangover.pour.timeout);
             delete hangover.pour.timeout;
         }
@@ -101,13 +101,13 @@ hangover.pour = (function(){
     /**
      * Set the end time for a component of this pour, and log the duration
      */
-    var stopPour = function(){
+    var stopPour = function() {
         hangover.isPouring = false;
         $('#pour-screen').removeClass('pouring');
         $('#debug #pouring').html('');
         endTime = new Date();
         // Log the total length of the pour to the pourCounts array
-        pourCounts.push(endTime-startTime);
+        pourCounts.push(endTime - startTime);
         // Reset Start and End times
         startTime = null;
         endTime = null;
@@ -116,18 +116,18 @@ hangover.pour = (function(){
      * Conclude this pour, and announce the final duration
      */
     var endPour = function() {
-        if(pourCounts.length === 0) {
+        if( pourCounts.length === 0 ) {
             return;
         }
         // Announce that the pour is complete
-        if(hangover.debugMode) {
-	        $('#debug #log').append([
-		        '<li>',
-		        duration(false),
-		        'ms (',
-		        duration(true),
-		        ' oz)</li>'
-	        ].join(''));
+        if( hangover.debugMode ) {
+            $('#debug #log').append([
+                '<li>',
+                duration(false),
+                'ms (',
+                duration(true),
+                ' oz)</li>'
+            ].join(''));
         }
         // Remove timeout variable
         delete hangover.pour.timeout;
@@ -155,12 +155,12 @@ if( window.DeviceMotionEvent ) {
     $('.warning.noAccelerometer').show();
 }
 
-var showBottle = function(name){
+var showBottle = function(name) {
     $('#pour-screen')
         .find('.bottle-label h2')
         .text(name)
-    .end()
-    .fadeIn(200);
+        .end()
+        .fadeIn(200);
     $('html, body').animate({scrollTop: 0}, 800);
     hangover.pour.ready = true;
 };
@@ -170,22 +170,12 @@ var hideBottle = function() {
 };
 
 
-
-
-
-
-
-
-
-
-
-
 /**
  * EVENT HANDLERS
  * *******************************************
  */
 // Initialize the pour mode
-$('#ingredients').on('click', 'a', function(e){
+$('#ingredients').on('click', 'a', function(e) {
     var liquorName = $(this).text();
     e.preventDefault();
     e.stopPropagation();
@@ -193,7 +183,7 @@ $('#ingredients').on('click', 'a', function(e){
     hangover.pour.init(liquorName);
 });
 // End the pour mode
-$('#pour-screen').on('click', 'a', function(e){
+$('#pour-screen').on('click', 'a', function(e) {
     e.preventDefault();
     e.stopPropagation();
     // Cancel out of the current pour
@@ -202,7 +192,7 @@ $('#pour-screen').on('click', 'a', function(e){
 
 
 // Open the message box
-var showMessage = function(message, drink){
+var showMessage = function(message, drink) {
     var $message = $('.message');
     $message.find('p.message-order').text(message);
     $message.find('p.message-hint').html(drink.recipe());
@@ -212,13 +202,13 @@ var showMessage = function(message, drink){
     $('#overlay').fadeIn(200);
 };
 // Inside the message box
-$('.message').on('click','a.help',function(){
+$('.message').on('click', 'a.help', function() {
     $(this).fadeOut(200);
     $('.message-order, a.help').fadeOut(200);
     $('.message-hint, a.close').fadeIn(200);
 });
 // Close the message box
-$('.message').on('click','a.close',function(){
+$('.message').on('click', 'a.close', function() {
     $('.message, #overlay').fadeOut(200);
     // Scroll down
     $('html, body').animate({scrollTop: $('body').height()}, 800);
@@ -227,11 +217,11 @@ $('.message').on('click','a.close',function(){
 
 // Event handler for POURING
 
-function deviceMotionHandler(event){
+function deviceMotionHandler(event) {
     var acceleration = event.accelerationIncludingGravity,
         rotation = Math.round(((acceleration.y + 9.81) / 9.81) * 90),
-		direction = (acceleration.z > 0) ? 1 : -1;
-    if(hangover.debugMode) {
+        direction = (acceleration.z > 0) ? 1 : -1;
+    if( hangover.debugMode ) {
         $('#debug #state').html([
             'rotation: ',
             rotation,
@@ -239,16 +229,16 @@ function deviceMotionHandler(event){
         ].join(''));
     }
 
-	if(hangover.isPouring && hangover.counter > 5){
-		document.getElementById("glass").style.webkitTransform = "rotate(" + Math.round(((acceleration.x) / 9.81) * 90 * .75 + 180) + "deg)";
-		hangover.counter = 0;
-	} else {
-		hangover.counter++;
-	}
+    if( hangover.isPouring && hangover.counter > 5 ) {
+        document.getElementById("glass").style.webkitTransform = "rotate(" + Math.round(((acceleration.x) / 9.81) * 90 * .75 + 180) + "deg)";
+        hangover.counter = 0;
+    } else {
+        hangover.counter++;
+    }
 
     if( -130 >= rotation || 130 <= rotation ) {
         //Start pouring
-        if( !hangover.isPouring && hangover.pour.ready) {
+        if( !hangover.isPouring && hangover.pour.ready ) {
             hangover.pour.start();
         }
     } else {
@@ -258,7 +248,7 @@ function deviceMotionHandler(event){
             // Don't hide the bottle immediately, as the pour may resume
             // and end several times in rapid succession. We give the user
             // a brief delay before we exit the pouring screen.
-            hangover.pour.timeout = window.setTimeout(function(){
+            hangover.pour.timeout = window.setTimeout(function() {
                 hangover.pour.end();
             }, hangover.pour.timeoutLength);
         }
@@ -266,36 +256,26 @@ function deviceMotionHandler(event){
 }
 
 
-
-
-
-
-
-
-
 /**
  * GAMEPLAY LOGIC
  * ******************************************
  */
-var aManWalksIntoABar = (function(){
+var aManWalksIntoABar = (function() {
     var patronIndex = 0;
     return function() {
         var thisPatron = hangover.patrons.current();
         // Clear out last patron
         $('#patrons').hide().removeClass('active').removeClass('done')
             // Switch to new patron
-            .css('background-image','url('+thisPatron.image+')')
+            .css('background-image', 'url(' + thisPatron.image + ')')
             // Move patron on-screen
             .show().addClass('active');
-        setTimeout(function(){
+        setTimeout(function() {
             showMessage(thisPatron.messages.order, thisPatron.order);
         }, 2500);
         patronIndex++;
     };
 })();
-
-
-
 
 
 /**
@@ -314,40 +294,39 @@ document.body.addEventListener('touchmove', disableScrolling, false);
 
 // First Customer
 hangover.drinks = {
-	martini: new Drink("Gin Martini",[
-        {name:'Gin',oz:2},
-        {name:'Dry Vermouth',oz:.5}
+    martini: new Drink("Gin Martini", [
+        {name: 'Gin', oz: 2},
+        {name: 'Dry Vermouth', oz: .5}
     ]),
-	capeCod: new Drink("Cape Cod",[
-		{name:'Vodka',oz:2},
-		{name:'Cranberry',oz:3}
-	]),
-	cosmopolitan: new Drink("Cosmopolitan",[
-		{name:'Vodka',oz:1.25},
-		{name:'Triple Sec',oz:.25},
-		{name:'Lime Juice',oz:.25},
-		{name:'Cranberry',oz:.25}
-	])
+    capeCod: new Drink("Cape Cod", [
+        {name: 'Vodka', oz: 2},
+        {name: 'Cranberry', oz: 3}
+    ]),
+    cosmopolitan: new Drink("Cosmopolitan", [
+        {name: 'Vodka', oz: 1.25},
+        {name: 'Triple Sec', oz: .25},
+        {name: 'Lime Juice', oz: .25},
+        {name: 'Cranberry', oz: .25}
+    ])
 };
 
 
-
-(function(){
-	patronA = new Patron(hangover.drinks.martini,{order:'I want a Gin Martini, stirred.'});
-	//patronB = new Patron(hangover.drinks.cosmopolitan,{order:'I\'ll have a Cosmo'});
-	//patronC = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'});
+(function() {
+    patronA = new Patron(hangover.drinks.martini, {order: 'I want a Gin Martini, stirred.'});
+    //patronB = new Patron(hangover.drinks.cosmopolitan,{order:'I\'ll have a Cosmo'});
+    //patronC = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'});
     hangover.patrons.add(patronA);
-	//hangover.patrons.add(patronB);
-	//hangover.patrons.add(patronC);
+    //hangover.patrons.add(patronB);
+    //hangover.patrons.add(patronC);
 })();
 
 
-$(document).ready(function(){
+$(document).ready(function() {
     $('#title-screen p').text('tap to begin');
-    $('#title-screen').on('click',function(){
+    $('#title-screen').on('click', function() {
         // Re-enable scrolling
         document.body.removeEventListener('touchmove', disableScrolling, false);
-	    delete disableScrolling;
+        delete disableScrolling;
         $('#title-screen').fadeOut(600);
         // The first guest will enter in one second
         setTimeout(aManWalksIntoABar, 1000);

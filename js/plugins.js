@@ -29,8 +29,7 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
  *   - trigger → publish
  *   - type → topic
  */
-/*
-    // Super-basic example:
+/*  // Super-basic example:
 
     function handle(e, a, b, c) {
     // `e` is the event object, you probably don't care about it.
