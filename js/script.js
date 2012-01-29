@@ -74,14 +74,25 @@ Patron.prototype.messages = {
     messages.failure : 'What to say if it is NOT made correctly'
     */
 };
-Patron.prototype.give = (function() {
-    pourResults = {};
-    var addPour = function(ingredient, quantity) {
-        if(pourResults.ingredient) {
+/**
+ * Add a pour to a patron's drink
+ * @param {String} ingredient The ingredient name, used as the key to the pourResults object
+ * @param {Number} quantity The number of ounces in the pour
+ */
+Patron.prototype.drink = (function() {
+    var pourResults = {};
+    var addIngredient = function(ingredient, quantity) {
+        if(pourResults[ingredient]) {
             pourResults[ingredient] += quantity;
         } else {
             pourResults[ingredient] = quantity;
         }
     };
-    return addPour;
+	var getDrink = function() {
+		// TODO: Add and return all the ingredients in the drink
+	};
+	return {
+		add: addIngredient,
+		get: getDrink
+	};
 })();

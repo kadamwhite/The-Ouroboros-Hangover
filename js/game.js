@@ -4,7 +4,25 @@
 hangover = {
     isPouring: false,
     currentIngredient: null,
-    patrons: [],
+    patrons: (function(){
+	    var patronArray = [];
+	    var addPatron = function(patron) {
+		    patronArray.push(patron);
+	    };
+	    var currentPatron = function(){
+		    // Active patron will always be the first
+		    return patronArray[0];
+	    };
+	    var nextPatron = function() {
+		    patronArray.shift();
+		    return patronArray[0];
+	    };
+	    return {
+		    current: currentPatron,
+		    add: addPatron,
+		    next: nextPatron
+	    }
+    })(),
     counter: 0
 };
 
@@ -102,13 +120,15 @@ hangover.pour = (function(){
             return;
         }
         // Announce that the pour is complete
-        $('#debug #log').append([
-            '<li>',
-            duration(false),
-            'ms (',
-            duration(true),
-            ' oz)</li>'
-        ].join(''));
+        if(hangover.debugMode) {
+	        $('#debug #log').append([
+		        '<li>',
+		        duration(false),
+		        'ms (',
+		        duration(true),
+		        ' oz)</li>'
+	        ].join(''));
+        }
         // Remove timeout variable
         delete hangover.pour.timeout;
         // Reset pourCounts
@@ -259,8 +279,8 @@ function deviceMotionHandler(event){
  */
 var aManWalksIntoABar = (function(){
     var patronIndex = 0;
-    return function(){
-        var thisPatron = hangover.patrons[patronIndex];
+    return function() {
+        var thisPatron = hangover.patrons.current();
         // Clear out last patron
         $('#patrons').hide().removeClass('active').removeClass('done')
             // Switch to new patron
@@ -316,9 +336,9 @@ hangover.drinks = {
 	patronA = new Patron(hangover.drinks.martini,{order:'I want a Gin Martini, stirred.'});
 	//patronB = new Patron(hangover.drinks.cosmopolitan,{order:'I\'ll have a Cosmo'});
 	//patronC = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'});
-    hangover.patrons.push(patronA);
-	//hangover.patrons.push(patronB);
-	//hangover.patrons.push(patronC);
+    hangover.patrons.add(patronA);
+	//hangover.patrons.add(patronB);
+	//hangover.patrons.add(patronC);
 })();
 
 
