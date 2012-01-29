@@ -7,13 +7,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>The Ouroboros Hangover</title>
+    <title>Ouroboros</title>
     <meta name="description" content="A Global Game Jam 2012 Original (tm)">
     <meta name="author" content="">
 
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon-precomposed" href="ouroboros-touch-icon-precomposed.png" />
 
     <!-- We aren't minifying anything yet -->
     <link rel="stylesheet" href="css/style.css">
@@ -25,6 +26,7 @@
     <div class="iPad warning">That old sketchy guy at the bar, he say: <em>&ldquo;do not use a cannon to kill a mosquito.&rdquo;</em> This game is best experienced on a handheld device.</div>
     <div class="noAccelerometer warning">ATTENTION: This game requires a motion-sensitive device, such as an Android or iPhone.</div>
     <div id="game">
+        <div id="title-screen"><p></p></div>
         <div id="pour-screen">
             <div class="bottle">
                 <a href="#">⇦ BACK</a>
@@ -35,15 +37,15 @@
                 </div>
             </div>
         </div>
+        <div class="message">
+            <p class="message-order"></p>
+            <p class="message-hint"></p>
+            <a href="#" class="help">[ ? ] WTF is that?</a>
+            <a href="#" class="close">[ ! ] You got it, boss</a>
+        </div>
+        <div id="overlay"></div>
         <div id="room">
-            <div id="patrons">
-                <div class="message">
-                    <p class="message-order"></p>
-                    <p class="message-hint"></p>
-                    <a href="#" class="help">[ ? ] WTF is that?</a>
-                    <a href="#" class="close">[ ! ] You got it, boss</a>
-                </div>
-            </div>
+            <div id="patrons"></div>
             <div id="bar">
                 <ul id="ingredients">
                     <li><a href="#">Gin</a></li>

@@ -75,6 +75,23 @@ body {
     font-size: 16px;
     overflow: hidden;
 }
+#title-screen {
+    position:absolute;
+    height: 480px;
+    width: 320px;
+    z-index: 200;
+    background: url(../img/title-screen.jpg) black 0 0 no-repeat;
+}
+#title-screen p {
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    font-family: serif;
+    font-size: 20px;
+    text-shadow: 0 2px 2px #000000;
+    padding-top: 201px;
+}
+
 a {
     color: #fff;
 }
@@ -97,6 +114,10 @@ a {
     z-index: 100;
     text-align: right;
     font-family: monospace;
+    display:none;
+}
+.debug #debug {
+    display:block;
 }
 #debug ul {
     padding: 0;
@@ -110,7 +131,7 @@ a {
 #room {
     background: url(../img/background.jpg) 0 -10px no-repeat;
     width: 320px;
-    height: 350px;
+    /*height: 350px;*/
 }
 
 
@@ -134,7 +155,8 @@ a {
 }
 
 
-#patrons .message {
+
+.message {
     display: none;
     width: 240px;
     height: 100px;
@@ -143,34 +165,38 @@ a {
     border: groove white;
     margin: 170px 40px;
     position: absolute;
+    z-index: 100;
 }
-#patrons .message p {
+.message p {
     padding: 0 10px;
     font-size: 14px;
     font-family: serif;
     font-weight: bold;
     position: absolute;
 }
-#patrons .message .message-hint {
+.message .message-hint {
     display:none;
     font-weight: normal;
 }
-#patrons .message a {
+.message a {
     color: #fff;
     font-size: 12px;
     text-decoration: none;
     font-weight: bold;
-}
-#patrons .message a.close {
-    text-align: right;
-    position: absolute;
-    right: 10px;
-    bottom: 5px;
-}
+    padding: 2px 4px 3px;
+    border-radius: 4px;
+    border: 1px solid #fff;
+/*}
 #patrons .message a.help {
     text-align: left;
     position: absolute;
     left: 10px;
+    bottom: 5px;
+}
+#patrons .message a.close {*/
+    text-align: right;
+    position: absolute;
+    right: 10px;
     bottom: 5px;
 }
 
@@ -223,7 +249,7 @@ a {
 
 #pour-screen {
     display: none;
-    position: fixed;
+    position: absolute;
     top: 0;
     width: 320px;
     height: 513px;
@@ -240,7 +266,7 @@ a {
     position: absolute;
     text-align: center;
     width: 320px;
-    top: 266px;
+    top: 286px;
 }
 .bottle-label p {
     font-size: 14px;
@@ -259,7 +285,7 @@ a {
     font-weight: bold;
     text-decoration: none;
     border: 1px solid white;
-    margin: 5px;
+    margin: 20px 5px;
     padding: 5px 10px;
     border-radius: 5px;
     display: block;
