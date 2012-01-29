@@ -135,7 +135,7 @@ Patron.prototype.evaluateDrink = function(){
             $('#bar .console').append('Good, you remembered the '+drinkTheyOrdered[i].name+'; ');
             quantityDelta = drinkTheyOrdered[i].oz - drinkYouMade[drinkTheyOrdered[i].name];
             quantityDelta = +quantityDelta.toFixed(2);
-            if(Math.abs(quantityDelta) < .25) {
+            if(hangover.isPourGood(quantityDelta)) {
                 score.goodPours++;
             } else {
                 score.badPours++;

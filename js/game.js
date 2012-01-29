@@ -23,6 +23,9 @@ hangover = {
             next: nextPatron
         }
     })(),
+    isPourGood: function(quantity){
+        return (Math.abs(quantityDelta) < .5);
+    },
     counter: 0
 };
 
@@ -145,7 +148,7 @@ hangover.pour = (function() {
         end: endPour,
         start: startPour,
         stop: stopPour,
-        timeoutLength: 1000 || parseInt(urlVars["timeout"], 10)
+        timeoutLength: 1500 || parseInt(urlVars["timeout"], 10)
     }
 })();
 
@@ -271,7 +274,7 @@ function deviceMotionHandler(event) {
     }
 
     if( hangover.isPouring && hangover.counter > 5 ) {
-        document.getElementById("glass").style.webkitTransform = "rotate(" + Math.round(((acceleration.x) / 9.81) * 90 * .75 + 180) + "deg)";
+        document.getElementById("glass").style.webkitTransform = "rotate(" + Math.round(((acceleration.x) / 9.81) * 90 * .5) + "deg)";
         hangover.counter = 0;
     } else {
         hangover.counter++;
