@@ -161,6 +161,10 @@ a {
     -webkit-transition: all 2s ease-in;
     transition: all 2s ease-in;
 }
+#patrons.reset {
+    -webkit-transition: all 0s linear;
+    transition: all 0s linear;
+}
 
 
 

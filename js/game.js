@@ -24,7 +24,8 @@ hangover = {
         }
     })(),
     isPourGood: function(quantity){
-        return (Math.abs(quantityDelta) < .5);
+        return true;
+        //return (Math.abs(quantity) < .5);
     },
     counter: 0
 };
@@ -247,15 +248,28 @@ $('.message.serve').on('click', 'a.retry', function() {
     $('.message.serve p.failure span').text('');
     $('.message.serve p.serve').show();
     thisPatron.drink.reset();
-    $('.message.serve').hide();
+    $('.message.serve').fadeOut(200);
     // Reset feedback
     $('#bar .console').text('');
     showMessage(thisPatron.messages.order, thisPatron.order);
 });
 // YOU GOT IT RIGHT button
 $('.message.serve').on('click', 'a.continue', function(){
+    // Move patron off
     $('#patrons').addClass('done');
+    // Reset message popup
+    $('.message.serve').fadeOut(200);
+    $('.message.serve p.success').hide();
+    $('.message.serve p.success span').text('');
+    $('.message.serve p.serve').show();
+    // Reset feedback
+    $('#bar .console').text('');
+    // Set up next patron
+    var patronB = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'}, 'img/ouro-drunk.png');
+    hangover.patrons.add(patronB);
     hangover.patrons.next();
+    // Next turn
+    setTimeout(aManWalksIntoABar, 3000);
 });
 
 
@@ -307,13 +321,13 @@ function deviceMotionHandler(event) {
 var aManWalksIntoABar = (function() {
     var patronIndex = 0;
     return function() {
-        var thisPatron = hangover.patrons.current();
+        var thisPatron = hangover.patrons.current(),
+            $patrons = $('#patrons');
         // Clear out last patron
-        $('#patrons').hide().removeClass('active').removeClass('done')
+        $patrons.hide().removeClass('active').removeClass('done').show();
             // Switch to new patron
-            .css('background-image', 'url(' + thisPatron.image + ')')
-            // Move patron on-screen
-            .show().addClass('active');
+        $patrons.css('background-image', 'url(' + thisPatron.image + ')');
+        $patrons.addClass('active');
         setTimeout(function() {
             showMessage(thisPatron.messages.order, thisPatron.order);
         }, 2500);
@@ -356,12 +370,15 @@ hangover.drinks = {
 
 
 (function() {
-    var patronA = new Patron(hangover.drinks.martini, {order: 'I want a Gin Martini, stirred.'}, 'img/ouro-sober.png');
-    //var patronB = new Patron(hangover.drinks.cosmopolitan, {order:'Gimme a Cosmo'}, 'img/ouro-drunk.png');
-    //patronC = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'}, 'img/ouro-drunk.png');
-    hangover.patrons.add(patronA);
-    //hangover.patrons.add(patronB);
-    //hangover.patrons.add(patronC);
+    var allPatrons = [
+        new Patron(hangover.drinks.martini, {order: 'I want a Gin Martini, stirred.'}, 'img/ouro-sober.png'),
+        new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'}, 'img/ouro-drunk.png'),
+        new Patron(hangover.drinks.cosmopolitan, {order:'Iiiii wanna WHISHkey shour, '}, 'img/ouro-drunker.png'),
+        new Patron(hangover.drinks.cosmopolitan, {order:'Gimme a god damned Cosmo'}, 'img/ouro-angry.png')
+    ];
+    hangover.patrons.add(allPatrons[0]);
+    hangover.patrons.add(allPatrons[1]);
+    hangover.patrons.add(allPatrons[2]);
 })();
 
 

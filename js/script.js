@@ -75,19 +75,11 @@ function Patron(drink, messages, image) {
         return new Patron(drink, messages, image);
     }
     this.order = drink;
-    // Override the default order (we need to know what they want)
+    this.messages = {};
+    // Set up our messages
     this.messages.order = messages.order || 'I\'ll have a ' + drink.name;
-}
-;
-Patron.prototype.messages = {
-    order: 'I\'ll have the usual',
-    success: 'Delicious!',
-    failure: 'Ugh, what IS this crap!?'
-    /* Messages should contain these values:
-        messages.order : 'What to say when you order the drink',
-        messages.success : 'What to say if it is made correctly',
-        messages.failure : 'What to say if it is NOT made correctly'
-    */
+    this.messages.success = messages.order || 'Delicious!';
+    this.messages.failure = messages.success || 'Ugh, what IS this crap!?';
 };
 /**
  * Add a pour to a patron's drink
