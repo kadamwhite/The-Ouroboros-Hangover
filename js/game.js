@@ -207,7 +207,8 @@ $('.message').on('click','a.close',function(){
 
 function deviceMotionHandler(event){
     var acceleration = event.accelerationIncludingGravity,
-        rotation = Math.round(((acceleration.y + 9.81) / 9.81) * 90);
+        rotation = Math.round(((acceleration.y + 9.81) / 9.81) * 90),
+		direction = (acceleration.z > 0) ? 1 : -1;
     if(hangover.debugMode) {
         $('#debug #state').html([
             'rotation: ',
@@ -215,6 +216,10 @@ function deviceMotionHandler(event){
             '&deg;'
         ].join(''));
     }
+
+	if(hangover.isPouring){
+		document.getElementById("glass").style.webkitTransform = "rotate(" + Math.round(((acceleration.x) / 9.81) * 90 + 180) + "deg)";
+	}
 
     if( -130 >= rotation || 130 <= rotation ) {
         //Start pouring
@@ -300,6 +305,6 @@ $(document).ready(function(){
         document.body.removeEventListener('touchmove', disableScrolling, false);
         $('#title-screen').fadeOut(600);
         // The first guest will enter in one second
-        setTimeout(aManWalksIntoABar, 1000);
+        //setTimeout(aManWalksIntoABar, 1000);
     });
 });

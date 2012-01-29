@@ -74,6 +74,7 @@ body {
     margin: 0;
     font-size: 16px;
     overflow: hidden;
+	height: 480px;
 }
 #title-screen {
     position:absolute;
@@ -264,10 +265,12 @@ a {
     background: url(../img/bottle-large.png) 0 0 no-repeat;
     height: 480px;
     width: 177px;
-    margin: auto;
+    margin: 0 auto;
+	position: relative;
+    -webkit-transition: margin 1s ease-out;
 }
 #pour-screen .bottle.pouring {
-    background-position: 153px 0;
+    margin-top: 150px;
 }
 #pour-screen .bottle-label {
     position: absolute;
@@ -275,7 +278,7 @@ a {
     width: 177px;
     top: 263px;
 }
-.bottle-label p {
+#pour-screen .bottle-label p {
     font-size: 14px;
     width: 140px;
     margin: auto;
@@ -283,7 +286,7 @@ a {
     font-style: italic;
     font-weight: bold;
 }
-.bottle-label h2 {
+#pour-screen .bottle-label h2 {
     margin: 5px 0;
     font-size: 24px;
 }
@@ -298,6 +301,13 @@ a {
     display: none;
     width: 70px;
     box-shadow: inset 0 0 10px #ff0000, inset 0 0 10px #ff0000;
+}
+
+#pour-screen #glass {
+	background: url(../img/rocks-glass.png) center top no-repeat;
+	width: 150px;
+	height: 160px;
+	position: absolute;
 }
 
 
