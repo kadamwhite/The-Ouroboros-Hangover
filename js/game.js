@@ -107,6 +107,8 @@ hangover.pour = (function(){
         delete hangover.pour.timeout;
         // Reset pourCounts
         pourCounts.length = 0;
+        // Hide bottle TODO: Does this actually belong here?
+        hideBottle();
     };
     return {
         init: initializePour,
@@ -164,34 +166,38 @@ $('#ingredients').on('click', 'a', function(e){
     //Set up the UI for a pouring action
     hangover.pour.init(liquorName);
 });
-// Close the pour mode
+// End the pour mode
 $('#pour-screen').on('click', 'a', function(e){
     e.preventDefault();
     e.stopPropagation();
     // Cancel out of the current pour
     hangover.pour.end();
-    // Hide bottle TODO: Does this actually belong here?
-    hideBottle();
 });
-// Close the request pop-up
-$('.message').on('click','a.close',function(){
-    $('.message').fadeOut(200);
-    // Scroll down
-    $('html, body').animate({scrollTop: $('body').height()}, 800);
-});
+
+
+// Open the message box
+var showMessage = function(message, drink){
+    var $message = $('.message');
+    $message.find('p.message-order').text(message);
+    $message.find('p.message-hint').html(drink.recipe());
+    // Step through screens, to make sure people see the recipe
+    $message.find('a.close').hide();
+    $message.fadeIn(200);
+    $('#overlay').fadeIn(200);
+};
+// Inside the message box
 $('.message').on('click','a.help',function(){
     $(this).fadeOut(200);
     $('.message-order, a.help').fadeOut(200);
     $('.message-hint, a.close').fadeIn(200);
 });
+// Close the message box
+$('.message').on('click','a.close',function(){
+    $('.message, #overlay').fadeOut(200);
+    // Scroll down
+    $('html, body').animate({scrollTop: $('body').height()}, 800);
+});
 
-var showMessage = function(message, drink){
-    var $message = $('.message');
-    $message.find('p.message-order').text(message);
-    $message.find('p.message-hint').html(drink.recipe());
-    $message.find('a.close').hide();
-    $message.fadeIn(200);
-};
 
 // Event handler for POURING
 

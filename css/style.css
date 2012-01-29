@@ -156,6 +156,17 @@ a {
 
 
 
+#overlay {
+    width: 320px;
+    height: 100%;
+    background: url(../img/dark-png.png);
+    z-index: 40;
+    position: absolute;
+    display:none;
+}
+
+
+
 .message {
     display: none;
     width: 240px;
@@ -186,14 +197,6 @@ a {
     padding: 2px 4px 3px;
     border-radius: 4px;
     border: 1px solid #fff;
-/*}
-#patrons .message a.help {
-    text-align: left;
-    position: absolute;
-    left: 10px;
-    bottom: 5px;
-}
-#patrons .message a.close {*/
     text-align: right;
     position: absolute;
     right: 10px;
@@ -256,17 +259,21 @@ a {
     background: url(../img/dark-png.png);
     z-index: 80;
     -webkit-transform: translateZ(0);
-
 }
 #pour-screen .bottle {
-    background: url(../img/bottle-large.png) center 40px no-repeat, url(../img/dark-png.png) repeat;
+    background: url(../img/bottle-large.png) 0 0 no-repeat;
     height: 513px;
+    width: 153px;
+    margin: auto;
+}
+#pour-screen .bottle.pouring {
+    background-position: 153px 0;
 }
 #pour-screen .bottle-label {
     position: absolute;
     text-align: center;
-    width: 320px;
-    top: 286px;
+    width: 153px;
+    top: 236px;
 }
 .bottle-label p {
     font-size: 14px;
@@ -285,7 +292,7 @@ a {
     font-weight: bold;
     text-decoration: none;
     border: 1px solid white;
-    margin: 20px 5px;
+    margin: 20px 5px 20px -70px;
     padding: 5px 10px;
     border-radius: 5px;
     display: block;
