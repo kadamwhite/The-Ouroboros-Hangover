@@ -298,7 +298,6 @@ $(document).ready(function(){
     $('#title-screen').on('click',function(){
         // Re-enable scrolling
         document.body.removeEventListener('touchmove', disableScrolling, false);
-        $('#pour-screen').hide();
         $('#title-screen').fadeOut(600);
         // The first guest will enter in one second
         setTimeout(aManWalksIntoABar, 1000);
