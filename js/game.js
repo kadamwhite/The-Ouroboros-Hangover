@@ -258,15 +258,13 @@ $('.message.serve').on('click', 'a.continue', function(){
     // Move patron off
     $('#patrons').addClass('done');
     // Reset message popup
-    $('.message.serve').fadeOut(200);
     $('.message.serve p.success').hide();
     $('.message.serve p.success span').text('');
-    $('.message.serve p.serve').show();
+    $('.message.serve p.serve').show(1000);
+    $('.message.serve').fadeOut(200);
     // Reset feedback
     $('#bar .console').text('');
     // Set up next patron
-    var patronB = new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'}, 'img/ouro-drunk.png');
-    hangover.patrons.add(patronB);
     hangover.patrons.next();
     // Next turn
     setTimeout(aManWalksIntoABar, 3000);
@@ -360,6 +358,10 @@ hangover.drinks = {
         {name: 'Vodka', oz: 2},
         {name: 'Cranberry', oz: 3}
     ]),
+    whiskeySour: new Drink("Whiskey Sour", [
+        {name: 'Whiskey', oz: 2},
+        {name: 'Lime Juice', oz: 1}
+    ]),
     cosmopolitan: new Drink("Cosmopolitan", [
         {name: 'Vodka', oz: 1.25},
         {name: 'Triple Sec', oz: .25},
@@ -373,12 +375,13 @@ hangover.drinks = {
     var allPatrons = [
         new Patron(hangover.drinks.martini, {order: 'I want a Gin Martini, stirred.'}, 'img/ouro-sober.png'),
         new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'}, 'img/ouro-drunk.png'),
-        new Patron(hangover.drinks.cosmopolitan, {order:'Iiiii wanna WHISHkey shour, '}, 'img/ouro-drunker.png'),
+        new Patron(hangover.drinks.whiskeySour, {order:'Iiiii wanna WHISHkey shour, '}, 'img/ouro-drunker.png'),
         new Patron(hangover.drinks.cosmopolitan, {order:'Gimme a god damned Cosmo'}, 'img/ouro-angry.png')
     ];
     hangover.patrons.add(allPatrons[0]);
     hangover.patrons.add(allPatrons[1]);
     hangover.patrons.add(allPatrons[2]);
+    hangover.patrons.add(allPatrons[3]);
 })();
 
 

@@ -78,8 +78,8 @@ function Patron(drink, messages, image) {
     this.messages = {};
     // Set up our messages
     this.messages.order = messages.order || 'I\'ll have a ' + drink.name;
-    this.messages.success = messages.order || 'Delicious!';
-    this.messages.failure = messages.success || 'Ugh, what IS this crap!?';
+    this.messages.success = messages.success || 'Delicious!';
+    this.messages.failure = messages.failure || 'Ugh, what IS this crap!?';
 };
 /**
  * Add a pour to a patron's drink
