@@ -380,13 +380,13 @@ hangover.drinks = {
     var allPatrons = [
         new Patron(hangover.drinks.martini, {order: 'I want a Gin Martini, stirred.'}, 'img/ouro-sober.png'),
         new Patron(hangover.drinks.capeCod,{order:'Cape Codder for me, ifya don\' mind'}, 'img/ouro-drunk.png'),
-        new Patron(hangover.drinks.whiskeySour, {order:'Iiiii wanna WHISHkey shour, '}, 'img/ouro-angry.png')/*,
-        new Patron(hangover.drinks.cosmopolitan, {order:'Gimme a god damned Cosmo'}, 'img/ouro-angry.png')*/
+        new Patron(hangover.drinks.whiskeySour, {order:'Iiiii wanna WHISHkey shour, '}, 'img/ouro-angry.png'),
+        new Patron(hangover.drinks.cosmopolitan, {order:'Gimme a god damned Cosmo'}, 'img/ouro-violent.png')
     ];
     hangover.patrons.add(allPatrons[0]);
     hangover.patrons.add(allPatrons[1]);
     hangover.patrons.add(allPatrons[2]);
-    //hangover.patrons.add(allPatrons[3]);
+    hangover.patrons.add(allPatrons[3]);
 })();
 
 
