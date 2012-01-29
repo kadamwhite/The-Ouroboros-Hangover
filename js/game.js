@@ -288,7 +288,7 @@ var aManWalksIntoABar = (function(){
             // Move patron on-screen
             .show().addClass('active');
         setTimeout(function(){
-            showMessage(thisPatron.messages.order, thisPatron.drink);
+            showMessage(thisPatron.messages.order, thisPatron.order);
         }, 2500);
         patronIndex++;
     };

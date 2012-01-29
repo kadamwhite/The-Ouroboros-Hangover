@@ -48,6 +48,20 @@ Drink.prototype.recipe = function() {
     }
     return recipe;
 };
+/**
+ * Return the drink in a format for comparison to
+ * TODO: redundant to the above, there can only be one
+ */
+Drink.prototype.getDrink = function() {
+	var drink = {};
+    for(var i = 0, max = this.ingredients.length; i < max; i++){
+        drink[ingredients[i].name] = {
+	        name: this.ingredients[i].name,
+	        oz: this.ingredients[i].oz
+        };
+    }
+	return drink;
+};
 
 
 /**
@@ -60,10 +74,10 @@ function Patron(drink,messages,image){
     if( !(this instanceof Patron) ) {
         return new Patron(drink,messages,image);
     }
-    this.drink = drink;
+    this.order = drink;
     // Override the default order (we need to know what they want)
     this.messages.order = messages.order || 'I\'ll have a '+drink.name;
-}
+};
 Patron.prototype.messages = {
     order: 'I\'ll have the usual',
     success: 'Delicious!',
@@ -90,6 +104,7 @@ Patron.prototype.drink = (function() {
     };
 	var getDrink = function() {
 		// TODO: Add and return all the ingredients in the drink
+		return pourResults;
 	};
 	return {
 		add: addIngredient,
