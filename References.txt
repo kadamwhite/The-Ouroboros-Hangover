@@ -1,0 +1,27 @@
+Accelerometer access
+http://www.mobilexweb.com/blog/safari-ios-accelerometer-websockets-html5
+https://developer.apple.com/library/safari/#documentation/SafariDOMAdditions/Reference/DeviceMotionEventClassRef/DeviceMotionEvent/DeviceMotionEvent.html
+http://www.tizenexperts.com/2011/11/magnetic-compass-device-orientation/
+http://www.html5rocks.com/en/tutorials/speed/html5/#toc-hardware-accell
+
+Various mobile/touch resources (esp. iPhone-specific)
+http://www.html5rocks.com/en/mobile/touch.html
+http://stackoverflow.com/questions/5995210/disabling-user-selection-in-uiwebview
+
+jsDoc
+http://www.techrepublic.com/blog/programming-and-development/create-useful-relevant-javascript-documentation-with-jsdoc/451
+http://code.google.com/p/jsdoc-toolkit/wiki/TagParam
+
+Pub/Sub
+https://gist.github.com/1321768 (4 solutions)
+https://gist.github.com/661855 (@Cowboy's tiny Pub/Sub)
+http://addyosmani.com/blog/jquery-1-7s-callbacks-feature-demystified/
+
+Media Queries
+http://perishablepress.com/press/2010/10/20/target-iphone-and-ipad-with-css3-media-queries/
+
+HTML color codes
+http://www.w3schools.com/html/html_colornames.asp
+
+ CSS3 animation
+ http://css3.bradshawenterprises.com/cfimg/
